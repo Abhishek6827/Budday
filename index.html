@@ -74,6 +74,147 @@
         .reveal-delay-5 { transition-delay: 0.5s; }
 
         /* ============================================
+           PAGE LOADER
+           ============================================ */
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1a0a1a 0%, #2d0a1e 50%, #1a0a1a 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loader-heart {
+            font-size: 3rem;
+            color: var(--primary);
+            animation: heartbeat 1.2s ease infinite;
+        }
+
+        .loader-text {
+            margin-top: 20px;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+        }
+
+        .loader-bar {
+            width: 120px;
+            height: 3px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 2px;
+            margin-top: 16px;
+            overflow: hidden;
+        }
+
+        .loader-bar-inner {
+            width: 0%;
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+            animation: loadBar 2s ease forwards;
+        }
+
+        @keyframes loadBar {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* ============================================
+           CUSTOM SCROLLBAR
+           ============================================ */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--primary-dark), var(--primary));
+        }
+
+        /* ============================================
+           GLASSMORPHISM UTILITIES
+           ============================================ */
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ============================================
+           GRADIENT TEXT
+           ============================================ */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, #ff80ab 50%, #f50057 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ============================================
+           FLOATING ANIMATION
+           ============================================ */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* ============================================
+           PULSE GLOW
+           ============================================ */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(233, 30, 99, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(233, 30, 99, 0); }
+        }
+
+        /* ============================================
+           NEON GLOW TEXT
+           ============================================ */
+        .neon-glow {
+            text-shadow: 0 0 10px rgba(233, 30, 99, 0.5),
+                         0 0 20px rgba(233, 30, 99, 0.3),
+                         0 0 30px rgba(233, 30, 99, 0.2);
+        }
+
+        /* ============================================
+           TYPEWRITER CURSOR
+           ============================================ */
+        .typewriter-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1em;
+            background: white;
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* ============================================
            AUDIO CONTROL BAR (Fixed Bottom)
            ============================================ */
         .audio-bar {
@@ -195,9 +336,9 @@
             border: 4px solid rgba(255, 255, 255, 0.8);
             object-fit: cover;
             margin-bottom: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 30px rgba(233, 30, 99, 0.3);
             opacity: 0;
-            animation: fadeInUp 1s ease 0.15s forwards;
+            animation: fadeInUp 1s ease 0.15s forwards, float 3s ease-in-out 1.5s infinite;
         }
 
         /* Floating hearts animation */
@@ -402,6 +543,7 @@
             border: 3px solid var(--white);
             border-radius: 50%;
             box-shadow: 0 0 0 3px var(--primary-light);
+            animation: pulseGlow 2s ease infinite;
         }
 
         .timeline-date {
@@ -414,11 +556,21 @@
         }
 
         .timeline-card {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 24px;
             border-radius: var(--border-radius);
-            box-shadow: 0 8px 30px var(--shadow);
+            box-shadow: 0 8px 30px var(--shadow), 0 0 20px rgba(233, 30, 99, 0.08);
             border-left: 4px solid var(--primary);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: var(--transition);
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px var(--shadow), 0 0 30px rgba(233, 30, 99, 0.15);
+            border-left: 4px solid var(--primary-dark);
         }
 
         .timeline-card h3 {
@@ -581,16 +733,25 @@
            POEMS SECTION
            ============================================ */
         .poem-card {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             padding: 40px 32px;
             border-radius: var(--border-radius);
-            box-shadow: 0 8px 30px var(--shadow);
+            box-shadow: 0 8px 30px var(--shadow), 0 0 25px rgba(233, 30, 99, 0.08);
             margin-bottom: 30px;
             position: relative;
             overflow: hidden;
             display: flex;
             gap: 28px;
             align-items: flex-start;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: var(--transition);
+        }
+
+        .poem-card:hover {
+            box-shadow: 0 12px 40px var(--shadow), 0 0 40px rgba(233, 30, 99, 0.15);
+            transform: translateY(-3px);
         }
 
         .poem-card .poem-img {
@@ -651,17 +812,21 @@
         }
 
         .quote-card {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 32px 28px;
             border-radius: var(--border-radius);
-            box-shadow: 0 4px 20px var(--shadow);
+            box-shadow: 0 4px 20px var(--shadow), 0 0 15px rgba(233, 30, 99, 0.05);
             transition: var(--transition);
             border-top: 3px solid var(--primary);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
         .quote-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px var(--shadow);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px var(--shadow), 0 0 30px rgba(233, 30, 99, 0.12);
+            border-top: 3px solid var(--primary-dark);
         }
 
         .quote-card .icon {
@@ -829,6 +994,13 @@
 </head>
 <body>
 
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <i class="fas fa-heart loader-heart"></i>
+        <p class="loader-text">For Anshika</p>
+        <div class="loader-bar"><div class="loader-bar-inner"></div></div>
+    </div>
+
     <!-- ============================================
          AUDIO CONTROL BAR (Fixed Bottom)
          Background music with user controls
@@ -873,7 +1045,7 @@
             <img src="assets/images/img-2.jpg" alt="Anshika" class="hero-profile" loading="eager">
             <h1>Happy Birthday Anshika</h1>
             <p class="subtitle">To the girl who turned a random game into my forever</p>
-            <p class="tagline">"Koi itna special bhi ho sakta tha... mujhe pata nahi tha."</p>
+            <p class="tagline">"I never knew someone could feel this special..."</p>
         </div>
         <div class="scroll-indicator">
             <i class="fas fa-chevron-down"></i>
@@ -885,8 +1057,8 @@
          Our journey from strangers to us
          ============================================ -->
     <section id="story">
-        <h2 class="section-title reveal">Our Story</h2>
-        <p class="section-subtitle reveal">Kaise ek game ne do strangers ko ek dusre ka sabse kareeb bana diya...</p>
+        <h2 class="section-title reveal gradient-text">Our Story</h2>
+        <p class="section-subtitle reveal">How one game turned two strangers into each other's closest...</p>
 
         <div class="timeline">
             <div class="timeline-item reveal">
@@ -894,8 +1066,8 @@
                 <div class="timeline-date">9 March</div>
                 <div class="timeline-card">
                     <h3>The First Encounter</h3>
-                    <p>Ek game, do strangers. Mujhe yaad hai ki pehli baar jab hum mile, toh kuch alag sa tha. Distance tha, hesitation thi, lekin koi unknown sa connection bhi tha jo baad mein samajh aaya.</p>
-                    <img src="assets/images/img-3.jpg" alt="First Encounter" class="timeline-img" loading="lazy">
+                    <p>One game, two strangers. I still remember the first time we met — something felt different. There was distance, hesitation, but also an unknown connection that I only truly understood later.</p>
+                    <img src="assets/images/img-1.jpg" alt="First Encounter" class="timeline-img" loading="lazy">
                 </div>
             </div>
 
@@ -904,7 +1076,7 @@
                 <div class="timeline-date">Early March</div>
                 <div class="timeline-card">
                     <h3>Same World, Same Dreams</h3>
-                    <p>Jaane kaise pata chala ki hum same career field mein hain. Conversations gehraai lene lagi. Topics badal gaye — game se zyada, life ke baare mein baatein hone lagi.</p>
+                    <p>Somehow we discovered we shared the same career field. Conversations grew deeper. Topics changed — from games to real life, we started talking about dreams, struggles, and everything in between.</p>
                     <img src="assets/images/img-4.jpg" alt="Same Dreams" class="timeline-img" loading="lazy">
                 </div>
             </div>
@@ -914,7 +1086,7 @@
                 <div class="timeline-date">BGMI Days</div>
                 <div class="timeline-card">
                     <h3>Chickens & Jealousy</h3>
-                    <p>BGMI mein saath khelna, chicken dinners, aur un choti-choti jealousies se bhi trust bana. Doston ki nazar mein tha, lekin hum sirf ek dusre pe focus karte rahe.</p>
+                    <p>Playing BGMI together, earning chicken dinners, and even navigating small jealousies helped build our trust. Friends noticed, but we only had eyes for each other.</p>
                     <img src="assets/images/img-5.jpg" alt="BGMI Days" class="timeline-img" loading="lazy">
                 </div>
             </div>
@@ -924,7 +1096,7 @@
                 <div class="timeline-date">12 March</div>
                 <div class="timeline-card">
                     <h3>The Friend Request</h3>
-                    <p>12 March ko tune friend request bheji. Us din se har din consistent raha — messages, calls, moments. Connection ab sirf game tak nahi tha, dil tak pohunch raha tha.</p>
+                    <p>On March 12, you sent a friend request. From that day, every single day was consistent — messages, calls, shared moments. The connection wasn't just about the game anymore; it was reaching our hearts.</p>
                     <img src="assets/images/img-6.jpg" alt="Friend Request" class="timeline-img" loading="lazy">
                 </div>
             </div>
@@ -934,7 +1106,7 @@
                 <div class="timeline-date">The Quiet Phase</div>
                 <div class="timeline-card">
                     <h3>When She Went Silent</h3>
-                    <p>Ek phase aaya jab tu quiet si ho gayi, dull si lagne lagi. Maine bas suna, samjha, aur guidance di. Self-respect aur emotional clarity ki baat ki. Aur tune apni taraf se decision liya.</p>
+                    <p>A phase came when you went quiet and seemed dull. I just listened, understood, and gently guided you. We talked about self-respect and emotional clarity. And then, you made your own beautiful decision.</p>
                     <img src="assets/images/img-7.jpg" alt="Quiet Phase" class="timeline-img" loading="lazy">
                 </div>
             </div>
@@ -944,7 +1116,7 @@
                 <div class="timeline-date">Today</div>
                 <div class="timeline-card">
                     <h3>Us — Naturally</h3>
-                    <p>Koi formal proposal nahi, koi pressure nahi. Bas organically, naturally, tu ne apne aap mujhe chuna. Aur aaj hum yahan hain — teasing, overthinking, playing, loving. Happy Birthday, meri Anshika.</p>
+                    <p>No formal proposal, no pressure. Just organically, naturally, you chose me on your own. And here we are today — teasing, overthinking, playing, and loving. Happy Birthday, my Anshika.</p>
                     <img src="assets/images/img-8.jpg" alt="Us Naturally" class="timeline-img" loading="lazy">
                 </div>
             </div>
@@ -953,7 +1125,7 @@
 
     <!-- Parallax Divider: Story to Gallery -->
     <div class="parallax-section reveal" style="background-image: url('assets/images/img-11.jpg');">
-        <p class="parallax-text">"Har pal jo saath bitaya, woh yaadon ki album ban gaya..."</p>
+        <p class="parallax-text">"Every moment we spent together became an album of memories..."</p>
     </div>
 
     <!-- ============================================
@@ -966,8 +1138,8 @@
          4. Update the src paths below if needed
          ============================================ -->
     <section id="gallery">
-        <h2 class="section-title reveal">Moments With You</h2>
-        <p class="section-subtitle reveal">Kuch pal bas humare liye...</p>
+        <h2 class="section-title reveal gradient-text">Moments With You</h2>
+        <p class="section-subtitle reveal">Some moments are just for us...</p>
 
         <div class="gallery-grid">
             <!-- IMAGE 1 -->
@@ -989,8 +1161,8 @@
                 <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #2</div>
             </div>
             <!-- IMAGE 3 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-3.jpg" data-caption="That Smile">
-                <img src="assets/images/img-3.jpg" alt="Memory 3" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-1.jpg" data-caption="That Smile">
+                <img src="assets/images/img-1.jpg" alt="Memory 3" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="media-placeholder" style="display:none;">
                     <i class="fas fa-image"></i>
                     <span>Media loading...<br><small>Place img-3.jpg in assets/images/</small></span>
@@ -1097,8 +1269,8 @@
                 <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #14</div>
             </div>
             <!-- IMAGE 15 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-15.jpg" data-caption="Just Us">
-                <img src="assets/images/img-15.jpg" alt="Memory 15" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-14.jpg" data-caption="Just Us">
+                <img src="assets/images/img-14.jpg" alt="Memory 15" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="media-placeholder" style="display:none;">
                     <i class="fas fa-image"></i>
                     <span>Media loading...<br><small>Place img-15.jpg in assets/images/</small></span>
@@ -1106,8 +1278,8 @@
                 <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #15</div>
             </div>
             <!-- IMAGE 16 -->
-            <div class="gallery-item reveal reveal-delay-1" data-type="image" data-src="assets/images/img-16.jpg" data-caption="Magic">
-                <img src="assets/images/img-16.jpg" alt="Memory 16" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="gallery-item reveal reveal-delay-1" data-type="image" data-src="assets/images/img-13.jpg" data-caption="Magic">
+                <img src="assets/images/img-13.jpg" alt="Memory 16" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="media-placeholder" style="display:none;">
                     <i class="fas fa-image"></i>
                     <span>Media loading...<br><small>Place img-16.jpg in assets/images/</small></span>
@@ -1115,8 +1287,8 @@
                 <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #16</div>
             </div>
             <!-- IMAGE 17 -->
-            <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-17.jpg" data-caption="Best Day">
-                <img src="assets/images/img-17.jpg" alt="Memory 17" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-12.jpg" data-caption="Best Day">
+                <img src="assets/images/img-12.jpg" alt="Memory 17" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="media-placeholder" style="display:none;">
                     <i class="fas fa-image"></i>
                     <span>Media loading...<br><small>Place img-17.jpg in assets/images/</small></span>
@@ -1124,8 +1296,8 @@
                 <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #17</div>
             </div>
             <!-- IMAGE 18 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-18.jpg" data-caption="My Favorite">
-                <img src="assets/images/img-18.jpg" alt="Memory 18" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-11.jpg" data-caption="My Favorite">
+                <img src="assets/images/img-11.jpg" alt="Memory 18" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="media-placeholder" style="display:none;">
                     <i class="fas fa-image"></i>
                     <span>Media loading...<br><small>Place img-18.jpg in assets/images/</small></span>
@@ -1270,7 +1442,7 @@
 
     <!-- Parallax Divider: Gallery to Poems -->
     <div class="parallax-section reveal" style="background-image: url('assets/images/img-12.jpg');">
-        <p class="parallax-text">"Kuch feelings shabdon mein band nahi hoti... bas mehsoos hoti hain."</p>
+        <p class="parallax-text">"Some feelings can't be trapped in words... they are simply felt."</p>
     </div>
 
     <!-- ============================================
@@ -1278,32 +1450,32 @@
          Two original poems for Anshika
          ============================================ -->
     <section id="poems">
-        <h2 class="section-title reveal">Words For You</h2>
-        <p class="section-subtitle reveal">Jo dil mein hai, woh shabdon mein...</p>
+        <h2 class="section-title reveal gradient-text">Words For You</h2>
+        <p class="section-subtitle reveal">What's in the heart, put into words...</p>
 
         <div class="poem-card reveal">
             <img src="assets/images/img-9.jpg" alt="Pehli Baar" class="poem-img" loading="lazy">
             <div class="poem-content">
             <h3>Pehli Baar</h3>
-            <p>Pehli baar jab tu mili,
-Mujhe laga bas ek aur stranger hai.
-Lekin waqt ne dikhaya,
-Ki tu meri sabse khaas dost ban jayegi.
+            <p>The first time I met you,
+I thought you were just another stranger.
+But time showed me,
+That you would become my most special friend.
 
-Game mein awaaz se shuru hui,
-Baatein phir screen ke paar gayi.
-Same dreams, same hustle, same junoon,
-Tu samajh gayi meri har khamoshi ka matlab.
+It started with a voice in the game,
+Then conversations went beyond the screen.
+Same dreams, same hustle, same passion,
+You understood every silence of mine.
 
-BGMI ke har match mein tu saath thi,
-Har chicken dinner mein teri hasi.
-Doston ki jealousy toh hoti rahi,
-Lekin hum sirf ek dusre pe marte rahe.
+In every BGMI match, you were by my side,
+In every chicken dinner, there was your laughter.
+Friends got jealous, but that never mattered,
+Because we only cared about each other.
 
-Aaj jab bhi sochta hoon us din ke baare mein,
-9 March — jab kuch alag sa shuru hua tha.
-Anshika, tu sirf ek name nahi hai,
-Tu woh feeling hai jo har din nayi lagti hai.</p>
+Today when I think about that day,
+9 March — when something different began.
+Anshika, you are not just a name,
+You are a feeling that feels new every single day.</p>
             <div class="for-you">- For You, Always</div>
             </div>
         </div>
@@ -1312,25 +1484,25 @@ Tu woh feeling hai jo har din nayi lagti hai.</p>
             <img src="assets/images/img-10.jpg" alt="Aaj Tera Din Hai" class="poem-img" loading="lazy">
             <div class="poem-content">
             <h3>Aaj Tera Din Hai</h3>
-            <p>Aaj tera din hai, meri Anshika,
-Aur main yahan hoon, tere liye kuch banaya.
-Paise nahi hain dene ke liye tohfa bada,
-Lekin dil se har line likhi hai, sachcha wada.
+            <p>Today is your day, my Anshika,
+And I am here, having built something for you.
+I don't have money for a grand gift,
+But every line is written from the heart, a true promise.
 
-Jab tu quiet thi, maine suna tha,
-Jab tu dull thi, maine roshan kiya tha.
-Self-respect seekhaya, clarity di,
-Aur tune khud se pyaar karna seekha, yahi meri jeet thi.
+When you were quiet, I listened.
+When you were dull, I brought light.
+Taught self-respect, gave clarity,
+And you learned to love yourself — that was my biggest victory.
 
-Koi proposal nahi, koi pressure nahi,
-Bas organically, naturally, tu ne mujhe chuna.
-Aaj bhi wohi playful banter, wohi teasing,
-Aur uske peeche ek bond jo har din badhta ja raha hai.
+No proposal, no pressure,
+Just organically, naturally, you chose me.
+Still the same playful banter, the same teasing,
+And behind it all, a bond that grows stronger every day.
 
-Happy Birthday meri jaan,
-Tu hamesha khush rahe, yahi meri dua hai.
-Yeh website chhoti si hai, par meri feelings nahi,
-Tu meri Anshika hai, aur hamesha rahegi.</p>
+Happy Birthday my love,
+May you always be happy, that's my only prayer.
+This website may be small, but my feelings are not,
+You are my Anshika, and you always will be.</p>
             <div class="for-you">- Happy Birthday, Love</div>
             </div>
         </div>
@@ -1341,31 +1513,31 @@ Tu meri Anshika hai, aur hamesha rahegi.</p>
          Short thoughtful reflections
          ============================================ -->
     <section id="messages">
-        <h2 class="section-title reveal">What You Mean To Me</h2>
-        <p class="section-subtitle reveal">Choti si baatein, bade emotions...</p>
+        <h2 class="section-title reveal gradient-text">What You Mean To Me</h2>
+        <p class="section-subtitle reveal">Little things, big emotions...</p>
 
         <div class="quotes-grid">
             <div class="quote-card reveal">
                 <div class="icon"><i class="fas fa-shield-heart"></i></div>
-                <p>"Trust nahi banta seedha. Humne har choti jealousy, har doubt ko saath mein face kiya. Aur aaj jab bhi sochta hoon, toh lagta hai ki yeh trust humne kaamiyaabi se kamaya hai."</p>
+                <p>"Trust isn't built overnight. We faced every small jealousy, every doubt together. And today, I know we earned this trust through every challenge we overcame."</p>
                 <div class="author">On Trust & Growth</div>
             </div>
 
             <div class="quote-card reveal reveal-delay-1">
                 <div class="icon"><i class="fas fa-face-grin-tongue-wink"></i></div>
-                <p>"Teri teasing, mera overthinking, phir dono ka hasna. Yeh loop kabhi nahi tootna chahiye. Tera 'kuch nahi' bolna aur mera pata lagane ki koshish — yeh sab sirf humara hai."</p>
+                <p>"Your teasing, my overthinking, then both of us laughing. This loop should never break. Your saying 'nothing' and my trying to figure it out — that's all uniquely ours."</p>
                 <div class="author">On Our Playful Bond</div>
             </div>
 
             <div class="quote-card reveal reveal-delay-2">
                 <div class="icon"><i class="fas fa-ear-listen"></i></div>
-                <p>"Jab tu quiet ho gayi thi, maine bas suna. Koi solution nahi, koi lecture nahi. Kyunki kabhi-kabhi sirf ek sunne wale ki zarurat hoti hai. Aur main hamesha wahi rahoonga."</p>
+                <p>"When you went quiet, I just listened. No solution, no lecture. Because sometimes you just need someone to hear you out. And I will always be that person."</p>
                 <div class="author">On Being There</div>
             </div>
 
             <div class="quote-card reveal reveal-delay-3">
                 <div class="icon"><i class="fas fa-star"></i></div>
-                <p>"Main paise se bada tohfa nahi de sakta, lekin ek cheez de sakta hoon — apna waqt, apni mehnat, aur yeh website jo sirf tere liye bani hai. Because you deserve to feel special."</p>
+                <p>"I can't buy you the grandest gift with money, but I can give you my time, my effort, and this website made just for you. Because you deserve to feel special."</p>
                 <div class="author">My Gift To You</div>
             </div>
         </div>
@@ -1373,7 +1545,7 @@ Tu meri Anshika hai, aur hamesha rahegi.</p>
 
     <!-- Parallax Divider: Messages to Birthday -->
     <div class="parallax-section reveal" style="background-image: url('assets/images/img-13.jpg');">
-        <p class="parallax-text">"Tera har ek pal meri duniya ka sabse haseen hissa hai..."</p>
+        <p class="parallax-text">"Every single moment of you is the most beautiful part of my world..."</p>
     </div>
 
     <!-- ============================================
@@ -1382,16 +1554,16 @@ Tu meri Anshika hai, aur hamesha rahegi.</p>
          ============================================ -->
     <section id="birthday">
         <div class="birthday-message reveal">
-            <h2>Happy Birthday, Anshika</h2>
-            <p>Aaj tera special din hai, aur main bas yeh kehna chahta hoon ki tu meri life ka sabse unexpected aur sabse khoobsurat chapter hai. 9 March se lekar aaj tak, har ek moment ne mujhe samjhaya ki pyaar kya hota hai — woh bhi bina kisi formal shuruaat ke.
+            <h2 class="neon-glow">Happy Birthday, Anshika</h2>
+            <p>Today is your special day, and I just want to say that you are the most unexpected and the most beautiful chapter of my life. From March 9 till today, every single moment has taught me what love truly is — even without any formal beginning.
 
-Main paise wala nahi hoon, expensive gifts nahi de sakta. Lekin main apne haathon se kuch bana sakta hoon, apne words se tujh special feel kara sakta hoon. Yeh website sirf code nahi hai, yeh meri feelings ka ek safar hai jo maine tere liye likha hai.
+I am not wealthy, and I cannot give expensive gifts. But I can build something with my own hands, and make you feel special with my words. This website is not just code — it is a journey of my feelings that I wrote entirely for you.
 
-Tu jab dull thi, maine tujhe suna. Jab overthink karti thi, maine guide kiya. Aur tune khud se pyaar karna seekha — yeh meri sabse badi achievement hai. Aaj tu meri hai, organically, naturally. Koi pressure nahi, bas ek dusre ki understanding.
+When you were feeling dull, I listened. When you overthought, I gently guided you. And you learned to love yourself — that is my biggest achievement. Today you are mine, organically, naturally. No pressure, just mutual understanding.
 
-Tera har birthday main aise hi celebrate karna chahta hoon — apne tareeke se, apne efforts se. Kyunki tu deserve karti hai ki koi tere liye mehnat kare, bina kisi reason ke, sirf pyaar mein.
+I want to celebrate every birthday of yours like this — in my own way, with my own efforts. Because you deserve someone who works hard for you, without any reason, purely out of love.
 
-Happy Birthday, meri Anshika. Yeh din tera hai, aur main hamesha tere saath hoon — game mein, life mein, har jagah. <i class="fas fa-heart"></i></p>
+Happy Birthday, my Anshika. This day is yours, and I am always with you — in games, in life, everywhere. <i class="fas fa-heart"></i></p>
             <div class="signature">Forever Yours</div>
         </div>
     </section>
@@ -1580,6 +1752,143 @@ Happy Birthday, meri Anshika. Yeh din tera hai, aur main hamesha tere saath hoon
                 }
             });
         });
+
+        /* ============================================
+           PAGE LOADER HIDE
+           ============================================ */
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('pageLoader').classList.add('hidden');
+            }, 2200);
+        });
+
+        /* ============================================
+           TYPEWRITER EFFECT (Hero Subtitle)
+           ============================================ */
+        const subtitleEl = document.querySelector('.hero-content .subtitle');
+        if (subtitleEl) {
+            const text = subtitleEl.textContent;
+            subtitleEl.textContent = '';
+            subtitleEl.style.opacity = '1';
+            let i = 0;
+            const cursor = document.createElement('span');
+            cursor.className = 'typewriter-cursor';
+            subtitleEl.appendChild(cursor);
+
+            function typeWriter() {
+                if (i < text.length) {
+                    subtitleEl.insertBefore(document.createTextNode(text.charAt(i)), cursor);
+                    i++;
+                    setTimeout(typeWriter, 55);
+                } else {
+                    setTimeout(() => cursor.remove(), 2000);
+                }
+            }
+            setTimeout(typeWriter, 1200);
+        }
+
+        /* ============================================
+           PARTICLE CANVAS (Subtle floating dots)
+           ============================================ */
+        (function() {
+            const canvas = document.createElement('canvas');
+            canvas.id = 'particleCanvas';
+            canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.4;';
+            document.body.insertBefore(canvas, document.body.firstChild);
+            const ctx = canvas.getContext('2d');
+            let w, h, particles = [];
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * w;
+                    this.y = Math.random() * h;
+                    this.vx = (Math.random() - 0.5) * 0.4;
+                    this.vy = (Math.random() - 0.5) * 0.4;
+                    this.size = Math.random() * 2.5 + 0.5;
+                    this.alpha = Math.random() * 0.5 + 0.2;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > w) this.vx *= -1;
+                    if (this.y < 0 || this.y > h) this.vy *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(233, 30, 99, ${this.alpha})`;
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+            function animate() {
+                ctx.clearRect(0, 0, w, h);
+                particles.forEach(p => { p.update(); p.draw(); });
+
+                // Draw faint connecting lines between nearby particles
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(233, 30, 99, ${0.08 * (1 - dist / 120)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+        })();
+
+        /* ============================================
+           3D TILT EFFECT (Cards)
+           ============================================ */
+        document.querySelectorAll('.timeline-card, .quote-card, .poem-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const cx = rect.width / 2;
+                const cy = rect.height / 2;
+                const dx = (x - cx) / cx;
+                const dy = (y - cy) / cy;
+                card.style.transform = `perspective(800px) rotateY(${dx * 6}deg) rotateX(${-dy * 6}deg) translateY(-4px)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        /* ============================================
+           MAGNETIC BUTTON (Audio Play/Pause)
+           ============================================ */
+        const ctrlBtn = document.getElementById('playPauseBtn');
+        if (ctrlBtn) {
+            ctrlBtn.addEventListener('mousemove', (e) => {
+                const rect = ctrlBtn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                ctrlBtn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px) scale(1.08)`;
+            });
+            ctrlBtn.addEventListener('mouseleave', () => {
+                ctrlBtn.style.transform = '';
+            });
+        }
     </script>
 </body>
 </html>
