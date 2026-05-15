@@ -37,6 +37,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-snap-type: y proximity;
         }
 
         body {
@@ -587,90 +588,122 @@
 
         .timeline-img {
             width: 100%;
-            height: 180px;
-            object-fit: cover;
+            max-height: 260px;
+            height: auto;
+            object-fit: contain;
             border-radius: 12px;
             margin-top: 14px;
             margin-bottom: 4px;
             box-shadow: 0 4px 12px var(--shadow);
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
         }
 
         /* ============================================
-           MEDIA GALLERY
+           MOMENTS SCROLL SECTION
+           Each image/video gets its own spotlight slide
            ============================================ */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
-        .gallery-item {
+        .moments-scroll {
             position: relative;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            cursor: pointer;
-            background: var(--card-bg);
-            box-shadow: 0 4px 16px var(--shadow);
-            transition: var(--transition);
-            aspect-ratio: 4 / 3;
         }
 
-        .gallery-item:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 30px var(--shadow);
-        }
-
-        .gallery-item img,
-        .gallery-item video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: var(--transition);
-        }
-
-        .gallery-item:hover img,
-        .gallery-item:hover video {
-            transform: scale(1.05);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 16px;
-            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
-            color: white;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .gallery-overlay i {
-            font-size: 0.9rem;
-        }
-
-        /* Media placeholder when file is missing */
-        .media-placeholder {
-            width: 100%;
-            height: 100%;
+        .moment-slide {
+            min-height: 100vh;
+            scroll-snap-align: start;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
-            color: var(--primary-dark);
-            font-size: 0.85rem;
-            text-align: center;
-            padding: 20px;
+            padding: 60px 24px;
+            position: relative;
+            border-bottom: 1px solid rgba(233, 30, 99, 0.08);
         }
 
-        .media-placeholder i {
-            font-size: 2rem;
-            margin-bottom: 8px;
-            opacity: 0.6;
+        .moment-slide:nth-child(odd) {
+            background: linear-gradient(180deg, var(--bg) 0%, #fff0f3 100%);
+        }
+
+        .moment-slide:nth-child(even) {
+            background: linear-gradient(180deg, #fff0f3 0%, var(--bg) 100%);
+        }
+
+        .moment-number {
+            position: absolute;
+            top: 24px;
+            right: 28px;
+            background: rgba(233, 30, 99, 0.1);
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 8px 18px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            backdrop-filter: blur(8px);
+        }
+
+        .moment-media {
+            max-width: 520px;
+            width: 100%;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 30px rgba(233, 30, 99, 0.1);
+            cursor: pointer;
+            transition: var(--transition);
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+        }
+
+        .moment-media:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 24px 70px rgba(0,0,0,0.2), 0 0 40px rgba(233, 30, 99, 0.15);
+        }
+
+        .moment-media img,
+        .moment-media video {
+            width: 100%;
+            height: auto;
+            max-height: 55vh;
+            object-fit: contain;
+            display: block;
+            border-radius: var(--border-radius);
+        }
+
+        .moment-text {
+            margin-top: 32px;
+            max-width: 580px;
+            text-align: center;
+            color: var(--text);
+            font-size: 1.1rem;
+            line-height: 1.9;
+            font-style: italic;
+            padding: 0 12px;
+        }
+
+        .moment-text p::before {
+            content: '"';
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-right: 4px;
+            line-height: 0;
+        }
+
+        .moment-text p::after {
+            content: '"';
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-left: 4px;
+            line-height: 0;
+        }
+
+        .moment-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-light);
+            font-size: 0.75rem;
+            opacity: 0.5;
+            animation: bounce 2s infinite;
         }
 
         /* ============================================
@@ -756,11 +789,13 @@
 
         .poem-card .poem-img {
             width: 220px;
-            height: 280px;
-            object-fit: cover;
+            max-height: 320px;
+            height: auto;
+            object-fit: contain;
             border-radius: 12px;
             flex-shrink: 0;
             box-shadow: 0 4px 16px var(--shadow);
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
         }
 
         .poem-card .poem-content {
@@ -940,12 +975,7 @@
             }
 
             .timeline-img {
-                height: 140px;
-            }
-
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 12px;
+                max-height: 200px;
             }
 
             .poem-card {
@@ -956,8 +986,29 @@
 
             .poem-card .poem-img {
                 width: 100%;
-                height: 200px;
+                max-height: 260px;
+                height: auto;
                 margin-bottom: 16px;
+            }
+
+            .moment-slide {
+                padding: 40px 16px;
+            }
+
+            .moment-media {
+                max-width: 100%;
+            }
+
+            .moment-text {
+                font-size: 1rem;
+                margin-top: 24px;
+            }
+
+            .moment-number {
+                top: 16px;
+                right: 16px;
+                font-size: 0.75rem;
+                padding: 6px 12px;
             }
 
             .parallax-section {
@@ -1129,306 +1180,309 @@
     </div>
 
     <!-- ============================================
-         MEDIA GALLERY
-         Numbered images & videos with lightbox
-         INSTRUCTIONS:
-         1. Rename your photos to: img-1.jpg, img-2.jpg, img-3.png, etc.
-         2. Rename your videos to: vid-1.mp4, vid-2.mp4, etc.
-         3. Place them in assets/images/ and assets/videos/
-         4. Update the src paths below if needed
+         MOMENTS WITH YOU
+         Each memory gets its own spotlight
          ============================================ -->
-    <section id="gallery">
+    <section id="moments">
         <h2 class="section-title reveal gradient-text">Moments With You</h2>
         <p class="section-subtitle reveal">Some moments are just for us...</p>
 
-        <div class="gallery-grid">
-            <!-- IMAGE 1 -->
-            <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-1.jpg" data-caption="Our First Memory">
-                <img src="assets/images/img-1.jpg" alt="Memory 1" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-1.jpg in assets/images/</small></span>
+        <div class="moments-scroll">
+            <!-- MOMENT 01 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">01 / 27</div>
+                <div class="moment-media" data-type="image" data-src="assets/images/img-1.jpg" data-caption="The First Time">
+                    <img src="assets/images/img-1.jpg" alt="Memory 1" loading="lazy">
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #1</div>
+                <div class="moment-text">
+                    <p>The first time our paths crossed through a game, I had no idea you would become my entire world.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 2 -->
-            <div class="gallery-item reveal reveal-delay-1" data-type="image" data-src="assets/images/img-2.jpg" data-caption="A Beautiful Moment">
-                <img src="assets/images/img-2.jpg" alt="Memory 2" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-2.jpg in assets/images/</small></span>
+            <!-- MOMENT 02 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">02 / 27</div>
+                <div class="moment-media" data-type="image" data-src="assets/images/img-2.jpg" data-caption="Every Photo">
+                    <img src="assets/images/img-2.jpg" alt="Memory 2" loading="lazy">
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #2</div>
+                <div class="moment-text">
+                    <p>Every photo of you captures a feeling I never knew words could describe.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 3 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-1.jpg" data-caption="That Smile">
-                <img src="assets/images/img-1.jpg" alt="Memory 3" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-3.jpg in assets/images/</small></span>
+            <!-- MOMENT 03 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">03 / 27</div>
+                <div class="moment-media" data-type="image" data-src="assets/images/img-4.jpg" data-caption="Strangers to Soulmates">
+                    <img src="assets/images/img-4.jpg" alt="Memory 3" loading="lazy">
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #3</div>
+                <div class="moment-text">
+                    <p>From two strangers in a virtual world to the closest souls in reality — destiny works in beautiful ways.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 4 -->
-            <div class="gallery-item reveal reveal-delay-1" data-type="image" data-src="assets/images/img-4.jpg" data-caption="Us Together">
-                <img src="assets/images/img-4.jpg" alt="Memory 4" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-4.jpg in assets/images/</small></span>
+            <!-- MOMENT 04 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">04 / 27</div>
+                <div class="moment-media" data-type="image" data-src="assets/images/img-5.jpg" data-caption="BGMI Nights">
+                    <img src="assets/images/img-5.jpg" alt="Memory 4" loading="lazy">
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #4</div>
+                <div class="moment-text">
+                    <p>Chicken dinners came and went, but your laughter stayed with me long after the match ended.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 5 -->
-            <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-5.jpg" data-caption="Candid Shot">
-                <img src="assets/images/img-5.jpg" alt="Memory 5" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-5.jpg in assets/images/</small></span>
+            <!-- MOMENT 05 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">05 / 27</div>
+                <div class="moment-media" data-type="image" data-src="assets/images/img-6.jpg" data-caption="March 12">
+                    <img src="assets/images/img-6.jpg" alt="Memory 5" loading="lazy">
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #5</div>
+                <div class="moment-text">
+                    <p>March 12 was not just a date on the calendar. It was the day my life found its missing piece.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 6 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-6.jpg" data-caption="Perfect Day">
-                <img src="assets/images/img-6.jpg" alt="Memory 6" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-6.jpg in assets/images/</small></span>
+            <!-- MOMENT 06 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">06 / 27</div>
+                <div class="moment-media" data-type="image" data-src="assets/images/img-7.jpg" data-caption="In Your Silence">
+                    <img src="assets/images/img-7.jpg" alt="Memory 6" loading="lazy">
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #6</div>
+                <div class="moment-text">
+                    <p>In your silence, I found understanding. In your quiet, I found my purpose.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 7 -->
-            <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-7.jpg" data-caption="Laughing Together">
-                <img src="assets/images/img-7.jpg" alt="Memory 7" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-7.jpg in assets/images/</small></span>
+            <!-- MOMENT 07 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">07 / 27</div>
+                <div class="moment-media" data-type="image" data-src="assets/images/img-8.jpg" data-caption="Naturally Us">
+                    <img src="assets/images/img-8.jpg" alt="Memory 7" loading="lazy">
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #7</div>
+                <div class="moment-text">
+                    <p>No grand gestures. No elaborate promises. Just two hearts choosing each other, simply and purely.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 8 -->
-            <div class="gallery-item reveal reveal-delay-1" data-type="image" data-src="assets/images/img-8.jpg" data-caption="Those Eyes">
-                <img src="assets/images/img-8.jpg" alt="Memory 8" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-8.jpg in assets/images/</small></span>
+            <!-- MOMENT 08 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">08 / 27</div>
+                <div class="moment-media" data-type="image" data-src="assets/images/img-9.jpg" data-caption="Your Smile">
+                    <img src="assets/images/img-9.jpg" alt="Memory 8" loading="lazy">
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #8</div>
+                <div class="moment-text">
+                    <p>Your smile is my favorite sight. Your voice is my favorite sound. You are my favorite everything.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 9 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-9.jpg" data-caption="Memories">
-                <img src="assets/images/img-9.jpg" alt="Memory 9" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-9.jpg in assets/images/</small></span>
+            <!-- MOMENT 09 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">09 / 27</div>
+                <div class="moment-media" data-type="image" data-src="assets/images/img-10.jpg" data-caption="Happiness">
+                    <img src="assets/images/img-10.jpg" alt="Memory 9" loading="lazy">
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #9</div>
+                <div class="moment-text">
+                    <p>Happiness is not a place. It is a person. And that person is you.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 10 -->
-            <div class="gallery-item reveal reveal-delay-1" data-type="image" data-src="assets/images/img-10.jpg" data-caption="Happiness">
-                <img src="assets/images/img-10.jpg" alt="Memory 10" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-10.jpg in assets/images/</small></span>
+            <!-- MOMENT 10 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">10 / 27</div>
+                <div class="moment-media" data-type="image" data-src="assets/images/img-11.jpg" data-caption="Crazy Us">
+                    <img src="assets/images/img-11.jpg" alt="Memory 10" loading="lazy">
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #10</div>
+                <div class="moment-text">
+                    <p>Crazy, chaotic, and completely ours. I would not trade a single moment.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 11 -->
-            <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-11.jpg" data-caption="Crazy Us">
-                <img src="assets/images/img-11.jpg" alt="Memory 11" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-11.jpg in assets/images/</small></span>
+            <!-- MOMENT 11 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">11 / 27</div>
+                <div class="moment-media" data-type="image" data-src="assets/images/img-12.jpg" data-caption="Simply Beautiful">
+                    <img src="assets/images/img-12.jpg" alt="Memory 11" loading="lazy">
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #11</div>
+                <div class="moment-text">
+                    <p>Beautiful does not even begin to describe what you mean to me.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 12 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-12.jpg" data-caption="Simply Beautiful">
-                <img src="assets/images/img-12.jpg" alt="Memory 12" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-12.jpg in assets/images/</small></span>
+            <!-- MOMENT 12 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">12 / 27</div>
+                <div class="moment-media" data-type="image" data-src="assets/images/img-13.jpg" data-caption="Forever">
+                    <img src="assets/images/img-13.jpg" alt="Memory 12" loading="lazy">
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #12</div>
+                <div class="moment-text">
+                    <p>Forever is not a length of time. It is a promise I intend to keep.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 13 -->
-            <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-13.jpg" data-caption="Forever Moments">
-                <img src="assets/images/img-13.jpg" alt="Memory 13" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-13.jpg in assets/images/</small></span>
+            <!-- MOMENT 13 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">13 / 27</div>
+                <div class="moment-media" data-type="image" data-src="assets/images/img-14.jpg" data-caption="Priceless">
+                    <img src="assets/images/img-14.jpg" alt="Memory 13" loading="lazy">
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #13</div>
+                <div class="moment-text">
+                    <p>Priceless moments are not about where you are. They are about who you are with.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 14 -->
-            <div class="gallery-item reveal reveal-delay-1" data-type="image" data-src="assets/images/img-14.jpg" data-caption="Priceless">
-                <img src="assets/images/img-14.jpg" alt="Memory 14" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-14.jpg in assets/images/</small></span>
+            <!-- MOMENT 14 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">14 / 27</div>
+                <div class="moment-media" data-type="video" data-src="assets/videos/vid-1.mp4" data-caption="In Motion">
+                    <video src="assets/videos/vid-1.mp4" controls muted preload="metadata" playsinline></video>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #14</div>
+                <div class="moment-text">
+                    <p>Motion captures what stillness cannot — the way you light up every room you enter.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 15 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-14.jpg" data-caption="Just Us">
-                <img src="assets/images/img-14.jpg" alt="Memory 15" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-15.jpg in assets/images/</small></span>
+            <!-- MOMENT 15 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">15 / 27</div>
+                <div class="moment-media" data-type="video" data-src="assets/videos/vid-2.mp4" data-caption="Your Laughter">
+                    <video src="assets/videos/vid-2.mp4" controls muted preload="metadata" playsinline></video>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #15</div>
+                <div class="moment-text">
+                    <p>Your laughter recorded is my favorite song on repeat.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 16 -->
-            <div class="gallery-item reveal reveal-delay-1" data-type="image" data-src="assets/images/img-13.jpg" data-caption="Magic">
-                <img src="assets/images/img-13.jpg" alt="Memory 16" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-16.jpg in assets/images/</small></span>
+            <!-- MOMENT 16 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">16 / 27</div>
+                <div class="moment-media" data-type="video" data-src="assets/videos/vid-3.mp4" data-caption="Small Moments">
+                    <video src="assets/videos/vid-3.mp4" controls muted preload="metadata" playsinline></video>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #16</div>
+                <div class="moment-text">
+                    <p>Small moments. Big feelings. Every second with you is worth saving.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 17 -->
-            <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-12.jpg" data-caption="Best Day">
-                <img src="assets/images/img-12.jpg" alt="Memory 17" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-17.jpg in assets/images/</small></span>
+            <!-- MOMENT 17 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">17 / 27</div>
+                <div class="moment-media" data-type="video" data-src="assets/videos/vid-4.mp4" data-caption="Watching You">
+                    <video src="assets/videos/vid-4.mp4" controls muted preload="metadata" playsinline></video>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #17</div>
+                <div class="moment-text">
+                    <p>I could watch you for hours and still find something new to love.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- IMAGE 18 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-11.jpg" data-caption="My Favorite">
-                <img src="assets/images/img-11.jpg" alt="Memory 18" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-image"></i>
-                    <span>Media loading...<br><small>Place img-18.jpg in assets/images/</small></span>
+            <!-- MOMENT 18 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">18 / 27</div>
+                <div class="moment-media" data-type="video" data-src="assets/videos/vid-5.mp4" data-caption="Fall Again">
+                    <video src="assets/videos/vid-5.mp4" controls muted preload="metadata" playsinline></video>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #18</div>
+                <div class="moment-text">
+                    <p>Some videos make you smile. Yours make me fall in love all over again.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- VIDEO 1 -->
-            <div class="gallery-item reveal" data-type="video" data-src="assets/videos/vid-1.mp4" data-caption="Video Moment #1">
-                <video src="assets/videos/vid-1.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-1.mp4 in assets/videos/</small></span>
+            <!-- MOMENT 19 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">19 / 27</div>
+                <div class="moment-media" data-type="video" data-src="assets/videos/vid-6.mp4" data-caption="Best Things">
+                    <video src="assets/videos/vid-6.mp4" controls muted preload="metadata" playsinline></video>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #1</div>
+                <div class="moment-text">
+                    <p>The best things in life are not things. They are moments like this.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- VIDEO 2 -->
-            <div class="gallery-item reveal reveal-delay-1" data-type="video" data-src="assets/videos/vid-2.mp4" data-caption="Video Moment #2">
-                <video src="assets/videos/vid-2.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-2.mp4 in assets/videos/</small></span>
+            <!-- MOMENT 20 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">20 / 27</div>
+                <div class="moment-media" data-type="video" data-src="assets/videos/vid-7.mp4" data-caption="Poetry in Motion">
+                    <video src="assets/videos/vid-7.mp4" controls muted preload="metadata" playsinline></video>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #2</div>
+                <div class="moment-text">
+                    <p>The way you move, the way you laugh — it is all poetry in motion.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- VIDEO 3 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="video" data-src="assets/videos/vid-3.mp4" data-caption="Video Moment #3">
-                <video src="assets/videos/vid-3.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-3.mp4 in assets/videos/</small></span>
+            <!-- MOMENT 21 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">21 / 27</div>
+                <div class="moment-media" data-type="video" data-src="assets/videos/vid-8.mp4" data-caption="Pause Time">
+                    <video src="assets/videos/vid-8.mp4" controls muted preload="metadata" playsinline></video>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #3</div>
+                <div class="moment-text">
+                    <p>If I could pause time, I would choose every single moment we are together.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- VIDEO 4 -->
-            <div class="gallery-item reveal reveal-delay-1" data-type="video" data-src="assets/videos/vid-4.mp4" data-caption="Video Moment #4">
-                <video src="assets/videos/vid-4.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-4.mp4 in assets/videos/</small></span>
+            <!-- MOMENT 22 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">22 / 27</div>
+                <div class="moment-media" data-type="video" data-src="assets/videos/vid-9.mp4" data-caption="Unfiltered Joy">
+                    <video src="assets/videos/vid-9.mp4" controls muted preload="metadata" playsinline></video>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #4</div>
+                <div class="moment-text">
+                    <p>Unfiltered joy. Real laughter. Absolute you. That is what I treasure most.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- VIDEO 5 -->
-            <div class="gallery-item reveal" data-type="video" data-src="assets/videos/vid-5.mp4" data-caption="Video Moment #5">
-                <video src="assets/videos/vid-5.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-5.mp4 in assets/videos/</small></span>
+            <!-- MOMENT 23 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">23 / 27</div>
+                <div class="moment-media" data-type="video" data-src="assets/videos/vid-10.mp4" data-caption="Rare Art">
+                    <video src="assets/videos/vid-10.mp4" controls muted preload="metadata" playsinline></video>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #5</div>
+                <div class="moment-text">
+                    <p>I save every memory of us like rare art. Because that is exactly what you are.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- VIDEO 6 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="video" data-src="assets/videos/vid-6.mp4" data-caption="Video Moment #6">
-                <video src="assets/videos/vid-6.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-6.mp4 in assets/videos/</small></span>
+            <!-- MOMENT 24 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">24 / 27</div>
+                <div class="moment-media" data-type="video" data-src="assets/videos/vid-11.mp4" data-caption="Endless Impression">
+                    <video src="assets/videos/vid-11.mp4" controls muted preload="metadata" playsinline></video>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #6</div>
+                <div class="moment-text">
+                    <p>A short clip, an endless impression. You leave your mark on everything.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- VIDEO 7 -->
-            <div class="gallery-item reveal" data-type="video" data-src="assets/videos/vid-7.mp4" data-caption="Video Moment #7">
-                <video src="assets/videos/vid-7.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-7.mp4 in assets/videos/</small></span>
+            <!-- MOMENT 25 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">25 / 27</div>
+                <div class="moment-media" data-type="video" data-src="assets/videos/vid-12.mp4" data-caption="Never Forget">
+                    <video src="assets/videos/vid-12.mp4" controls muted preload="metadata" playsinline></video>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #7</div>
+                <div class="moment-text">
+                    <p>Memories may fade, but videos bring them back. And I never want to forget.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- VIDEO 8 -->
-            <div class="gallery-item reveal reveal-delay-1" data-type="video" data-src="assets/videos/vid-8.mp4" data-caption="Video Moment #8">
-                <video src="assets/videos/vid-8.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-8.mp4 in assets/videos/</small></span>
+            <!-- MOMENT 26 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">26 / 27</div>
+                <div class="moment-media" data-type="video" data-src="assets/videos/vid-13.mp4" data-caption="Our Story">
+                    <video src="assets/videos/vid-13.mp4" controls muted preload="metadata" playsinline></video>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #8</div>
+                <div class="moment-text">
+                    <p>Every video is a chapter. And I am still writing our story.</p>
+                </div>
+                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
             </div>
-            <!-- VIDEO 9 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="video" data-src="assets/videos/vid-9.mp4" data-caption="Video Moment #9">
-                <video src="assets/videos/vid-9.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-9.mp4 in assets/videos/</small></span>
+            <!-- MOMENT 27 -->
+            <div class="moment-slide reveal">
+                <div class="moment-number">27 / 27</div>
+                <div class="moment-media" data-type="video" data-src="assets/videos/vid-14.mp4" data-caption="The Next One">
+                    <video src="assets/videos/vid-14.mp4" controls muted preload="metadata" playsinline></video>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #9</div>
-            </div>
-            <!-- VIDEO 10 -->
-            <div class="gallery-item reveal reveal-delay-1" data-type="video" data-src="assets/videos/vid-10.mp4" data-caption="Video Moment #10">
-                <video src="assets/videos/vid-10.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-10.mp4 in assets/videos/</small></span>
+                <div class="moment-text">
+                    <p>My favorite video will always be the next one we make together.</p>
                 </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #10</div>
-            </div>
-            <!-- VIDEO 11 -->
-            <div class="gallery-item reveal" data-type="video" data-src="assets/videos/vid-11.mp4" data-caption="Video Moment #11">
-                <video src="assets/videos/vid-11.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-11.mp4 in assets/videos/</small></span>
-                </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #11</div>
-            </div>
-            <!-- VIDEO 12 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="video" data-src="assets/videos/vid-12.mp4" data-caption="Video Moment #12">
-                <video src="assets/videos/vid-12.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-12.mp4 in assets/videos/</small></span>
-                </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #12</div>
-            </div>
-            <!-- VIDEO 13 -->
-            <div class="gallery-item reveal" data-type="video" data-src="assets/videos/vid-13.mp4" data-caption="Video Moment #13">
-                <video src="assets/videos/vid-13.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-13.mp4 in assets/videos/</small></span>
-                </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #13</div>
-            </div>
-            <!-- VIDEO 14 -->
-            <div class="gallery-item reveal reveal-delay-1" data-type="video" data-src="assets/videos/vid-14.mp4" data-caption="Video Moment #14">
-                <video src="assets/videos/vid-14.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-14.mp4 in assets/videos/</small></span>
-                </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #14</div>
             </div>
         </div>
     </section>
@@ -1645,14 +1699,14 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
 
         /* ============================================
            LIGHTBOX FUNCTIONALITY
-           Click gallery item to open full view
+           Click moment media to open full view
            ============================================ */
         const lightbox = document.getElementById('lightbox');
         const lightboxContent = document.getElementById('lightboxContent');
         const lightboxCaption = document.getElementById('lightboxCaption');
         const lightboxClose = document.getElementById('lightboxClose');
 
-        document.querySelectorAll('.gallery-item').forEach(item => {
+        document.querySelectorAll('.moment-media').forEach(item => {
             item.addEventListener('click', () => {
                 const type = item.getAttribute('data-type');
                 const src = item.getAttribute('data-src');
