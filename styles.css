@@ -453,15 +453,12 @@ section > *:not(.section-bg) {
   gap: 24px;
   padding: 20px 40px;
   max-width: 100%;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 .carousel-wrapper::after {
   content: '';
   min-width: 40px;
   flex-shrink: 0;
 }
-.carousel-wrapper::-webkit-scrollbar { display: none; }
 
 .carousel-card {
   min-width: 280px; max-width: 280px;
