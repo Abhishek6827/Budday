@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Only attach Tripti handler if Budday's #musicPlayer inline handler isn't present
+  // Only attach secondary handler if Budday's #musicPlayer inline handler isn't present
   if (musicPlayer && !document.getElementById('musicPlayer')) {
     musicPlayer.addEventListener('click', () => {
       if (audio.paused) {

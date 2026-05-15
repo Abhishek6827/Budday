@@ -586,7 +586,7 @@ section > *:not(.section-bg) {
   background: linear-gradient(180deg, rgba(123,45,142,0.2), transparent);
 }
 
-#poems, #tripti-poems { min-height: 100vh; }
+#poems, #extra-poems { min-height: 100vh; }
 
 .poem-block {
   max-width: 800px;
