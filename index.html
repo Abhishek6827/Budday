@@ -1227,10 +1227,12 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
             const slide = video.closest('.moment-slide');
             if (slide) {
                 slide.addEventListener('mouseenter', () => {
+                    if (audio) audio.volume = 0.1;
                     video.muted = false;
                     video.play().catch(() => {});
                 });
                 slide.addEventListener('mouseleave', () => {
+                    if (audio) audio.volume = 0.5;
                     video.pause();
                     video.muted = true;
                 });
@@ -1244,13 +1246,14 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
             const video = card.querySelector('video');
             if (!video) return;
             card.addEventListener('mouseenter', () => {
+                if (audio) audio.volume = 0.1;
                 video.muted = false;
                 video.volume = 1;
                 video.play().catch(() => {});
             });
             card.addEventListener('mouseleave', () => {
+                if (audio) audio.volume = 0.5;
                 video.muted = true;
-                // Optional: keep it playing silently or pause it. We will keep it playing since it's a carousel.
             });
         });
 
