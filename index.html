@@ -63,7 +63,7 @@
         .moment-text p { font-family: var(--font-script); color: var(--text-muted); font-size: 1rem; line-height: 1.5; }
 
         .poem-card { max-width: 700px; margin: 0 auto 50px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--border-radius, 16px); overflow: hidden; }
-        .poem-card img { width: 100%; height: 220px; object-fit: cover; display: block; filter: brightness(0.85); }
+        .poem-card img { width: 100%; height: auto; max-height: 450px; object-fit: contain; background: #000; display: block; filter: brightness(0.85); }
         .poem-content { padding: 36px; }
         .poem-content h3 { font-family: var(--font-vibes); color: var(--gold); font-size: 2.2rem; margin-bottom: 20px; text-align: center; }
         .poem-content p { font-family: var(--font-script); color: var(--text-light); font-size: 1.2rem; line-height: 2.2; text-align: center; white-space: pre-line; }
@@ -110,7 +110,7 @@
     <div class="scroll-progress" id="scrollProgress"></div>
 
     <!-- Background audio element -->
-    <audio id="bgAudio" loop autoplay preload="auto" crossorigin="anonymous">
+    <audio id="bgAudio" loop preload="auto">
         <!-- DEFAULT: Free soft piano instrumental from Pixabay -->
         <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1800dcd412.mp3?filename=soft-piano-100-bpm-121529.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
@@ -132,7 +132,7 @@
     <!-- ═══════════════════════════════════════════
          SECTION 2: THE ENVELOPE
          ═══════════════════════════════════════════ -->
-    <section id="envelope-section">
+    <section id="envelope-section" style="overflow: visible; z-index: 5;">
         <div class="section-bg"><img src="assets/images/img-8.jpg" alt=""></div>
         <h2 class="section-title animate-on-scroll">💌 A Letter Just For You</h2>
         <div class="envelope-container animate-on-scroll">
@@ -1153,6 +1153,7 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
 
         document.querySelectorAll('.moment-media').forEach(item => {
             item.addEventListener('click', () => {
+                if (!lightbox || !lightboxContent) return;
                 const type = item.getAttribute('data-type');
                 const src = item.getAttribute('data-src');
                 const caption = item.getAttribute('data-caption');
@@ -1172,20 +1173,21 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
                     lightboxContent.appendChild(video);
                 }
 
-                lightboxCaption.textContent = caption;
+                if (lightboxCaption) lightboxCaption.textContent = caption;
                 lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Prevent background scroll
+                document.body.style.overflow = 'hidden';
             });
         });
 
         function closeLightbox() {
+            if (!lightbox) return;
             lightbox.classList.remove('active');
-            lightboxContent.innerHTML = '';
+            if (lightboxContent) lightboxContent.innerHTML = '';
             document.body.style.overflow = '';
         }
 
-        lightboxClose.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
+        if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+        if (lightbox) lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) closeLightbox();
         });
         document.addEventListener('keydown', (e) => {
@@ -1194,13 +1196,58 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
 
         /* ============================================
            BACKGROUND AUDIO
+           Start on first user interaction (browsers block autoplay)
            ============================================ */
         const audio = document.getElementById('bgAudio');
-        audio.volume = 0.5;
+        if (audio) {
+            audio.volume = 0.5;
+            let pianoStarted = false;
+            function startPiano() {
+                if (!pianoStarted) {
+                    audio.play().catch(() => {});
+                    pianoStarted = true;
+                }
+            }
+            // Start piano on first click/touch anywhere
+            document.addEventListener('click', startPiano, { once: true });
+            document.addEventListener('touchstart', startPiano, { once: true });
 
-        audio.addEventListener('ended', () => {
-            audio.currentTime = 0;
-            audio.play().catch(() => {});
+            audio.addEventListener('ended', () => {
+                audio.currentTime = 0;
+                audio.play().catch(() => {});
+            });
+        }
+
+        /* ============================================
+           MOMENT VIDEOS — HOVER TO PLAY WITH SOUND
+           ============================================ */
+        document.querySelectorAll('.moment-slide video').forEach(video => {
+            video.muted = true;
+            const slide = video.closest('.moment-slide');
+            if (slide) {
+                slide.addEventListener('mouseenter', () => {
+                    video.muted = false;
+                    video.play().catch(() => {});
+                });
+                slide.addEventListener('mouseleave', () => {
+                    video.pause();
+                    video.muted = true;
+                });
+            }
+        });
+
+        /* ============================================
+           CAROUSEL VIDEOS — HOVER TO UNMUTE
+           ============================================ */
+        document.querySelectorAll('.carousel-card').forEach(card => {
+            const video = card.querySelector('video');
+            if (!video) return;
+            card.addEventListener('mouseenter', () => {
+                video.muted = false;
+            });
+            card.addEventListener('mouseleave', () => {
+                video.muted = true;
+            });
         });
 
         /* ============================================
