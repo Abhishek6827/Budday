@@ -37,7 +37,6 @@
 
         html {
             scroll-behavior: smooth;
-            scroll-snap-type: y proximity;
         }
 
         body {
@@ -315,7 +314,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('assets/images/img-1.jpg') center center / cover no-repeat;
+            background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 40%, #4a1c40 70%, #1a0b2e 100%);
             transform: translateZ(0);
             will-change: transform;
         }
@@ -406,6 +405,92 @@
             color: white;
             font-size: 1.5rem;
             animation: bounce 2s infinite;
+        }
+
+        /* ============================================
+           HERO CAROUSEL
+           Auto-cycling slideshow of all images
+           ============================================ */
+        .hero-carousel {
+            position: relative;
+            width: min(85vw, 560px);
+            height: min(45vh, 380px);
+            margin: 0 auto 24px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+        }
+
+        .hero-carousel .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+        }
+
+        .hero-carousel .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .hero-carousel .carousel-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .hero-carousel .carousel-number {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 2;
+            letter-spacing: 1px;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+        }
+
+        .hero-carousel .carousel-slide.active .carousel-number {
+            opacity: 1;
+        }
+
+        .hero-carousel .carousel-dots {
+            position: absolute;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .hero-carousel .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .hero-carousel .carousel-dot.active {
+            background: white;
+            transform: scale(1.3);
+            border-color: rgba(255,255,255,0.6);
         }
 
         @keyframes fadeInUp {
@@ -600,26 +685,36 @@
 
         /* ============================================
            MOMENTS SCROLL SECTION
-           Each image/video gets its own spotlight slide
+           Dedicated scroll container with snap & two-col layout
            ============================================ */
         .moments-scroll {
+            height: calc(100vh - 80px);
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
             position: relative;
+            border-radius: var(--border-radius);
+            box-shadow: 0 20px 60px var(--shadow);
+            background: var(--bg);
         }
 
         .moment-slide {
-            min-height: 100vh;
+            height: 100%;
             scroll-snap-align: start;
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
             align-items: center;
-            justify-content: center;
-            padding: 60px 24px;
+            gap: 50px;
+            padding: 40px 60px;
             position: relative;
-            border-bottom: 1px solid rgba(233, 30, 99, 0.08);
+            background: linear-gradient(180deg, var(--bg) 0%, #fff0f3 100%);
+            opacity: 0.35;
+            transform: scale(0.92);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        .moment-slide:nth-child(odd) {
-            background: linear-gradient(180deg, var(--bg) 0%, #fff0f3 100%);
+        .moment-slide.active {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .moment-slide:nth-child(even) {
@@ -628,8 +723,8 @@
 
         .moment-number {
             position: absolute;
-            top: 24px;
-            right: 28px;
+            top: 20px;
+            right: 24px;
             background: rgba(233, 30, 99, 0.1);
             color: var(--primary);
             font-size: 0.85rem;
@@ -638,17 +733,22 @@
             border-radius: 20px;
             letter-spacing: 1px;
             backdrop-filter: blur(8px);
+            z-index: 2;
         }
 
         .moment-media {
-            max-width: 520px;
             width: 100%;
+            height: 100%;
+            max-height: calc(100vh - 140px);
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 30px rgba(233, 30, 99, 0.1);
             cursor: pointer;
             transition: var(--transition);
             background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .moment-media:hover {
@@ -658,29 +758,28 @@
 
         .moment-media img,
         .moment-media video {
-            width: 100%;
+            max-width: 100%;
+            max-height: calc(100vh - 160px);
+            width: auto;
             height: auto;
-            max-height: 55vh;
             object-fit: contain;
             display: block;
             border-radius: var(--border-radius);
         }
 
         .moment-text {
-            margin-top: 32px;
-            max-width: 580px;
-            text-align: center;
+            text-align: left;
             color: var(--text);
-            font-size: 1.1rem;
-            line-height: 1.9;
+            font-size: 1.15rem;
+            line-height: 2;
             font-style: italic;
-            padding: 0 12px;
+            padding: 0 8px;
         }
 
         .moment-text p::before {
             content: '"';
             font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
+            font-size: 2rem;
             color: var(--primary);
             margin-right: 4px;
             line-height: 0;
@@ -689,7 +788,7 @@
         .moment-text p::after {
             content: '"';
             font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
+            font-size: 2rem;
             color: var(--primary);
             margin-left: 4px;
             line-height: 0;
@@ -697,13 +796,14 @@
 
         .moment-hint {
             position: absolute;
-            bottom: 20px;
+            bottom: 16px;
             left: 50%;
             transform: translateX(-50%);
             color: var(--text-light);
             font-size: 0.75rem;
             opacity: 0.5;
             animation: bounce 2s infinite;
+            z-index: 2;
         }
 
         /* ============================================
@@ -991,22 +1091,36 @@
                 margin-bottom: 16px;
             }
 
+            .moments-scroll {
+                height: calc(100vh - 70px);
+                border-radius: 12px;
+            }
+
             .moment-slide {
-                padding: 40px 16px;
+                grid-template-columns: 1fr;
+                padding: 24px 20px;
+                gap: 24px;
+                align-content: center;
             }
 
             .moment-media {
-                max-width: 100%;
+                max-height: 50vh;
+            }
+
+            .moment-media img,
+            .moment-media video {
+                max-height: 45vh;
             }
 
             .moment-text {
+                text-align: center;
                 font-size: 1rem;
-                margin-top: 24px;
+                line-height: 1.8;
             }
 
             .moment-number {
-                top: 16px;
-                right: 16px;
+                top: 12px;
+                right: 12px;
                 font-size: 0.75rem;
                 padding: 6px 12px;
             }
@@ -1033,6 +1147,11 @@
             .hero-profile {
                 width: 90px;
                 height: 90px;
+            }
+
+            .hero-carousel {
+                width: min(92vw, 420px);
+                height: min(35vh, 280px);
             }
         }
 
@@ -1093,7 +1212,61 @@
         <div class="hero-bg" id="heroBg"></div>
         <!-- Floating hearts will be injected by JS -->
         <div class="hero-content">
-            <img src="assets/images/img-2.jpg" alt="Anshika" class="hero-profile" loading="eager">
+            <div class="hero-carousel" id="heroCarousel">
+                <div class="carousel-slide active" data-index="0">
+                    <img src="assets/images/img-1.jpg" alt="Memory 1" loading="eager">
+                    <div class="carousel-number">01 / 13</div>
+                </div>
+                <div class="carousel-slide" data-index="1">
+                    <img src="assets/images/img-2.jpg" alt="Memory 2" loading="lazy">
+                    <div class="carousel-number">02 / 13</div>
+                </div>
+                <div class="carousel-slide" data-index="2">
+                    <img src="assets/images/img-4.jpg" alt="Memory 3" loading="lazy">
+                    <div class="carousel-number">03 / 13</div>
+                </div>
+                <div class="carousel-slide" data-index="3">
+                    <img src="assets/images/img-5.jpg" alt="Memory 4" loading="lazy">
+                    <div class="carousel-number">04 / 13</div>
+                </div>
+                <div class="carousel-slide" data-index="4">
+                    <img src="assets/images/img-6.jpg" alt="Memory 5" loading="lazy">
+                    <div class="carousel-number">05 / 13</div>
+                </div>
+                <div class="carousel-slide" data-index="5">
+                    <img src="assets/images/img-7.jpg" alt="Memory 6" loading="lazy">
+                    <div class="carousel-number">06 / 13</div>
+                </div>
+                <div class="carousel-slide" data-index="6">
+                    <img src="assets/images/img-8.jpg" alt="Memory 7" loading="lazy">
+                    <div class="carousel-number">07 / 13</div>
+                </div>
+                <div class="carousel-slide" data-index="7">
+                    <img src="assets/images/img-9.jpg" alt="Memory 8" loading="lazy">
+                    <div class="carousel-number">08 / 13</div>
+                </div>
+                <div class="carousel-slide" data-index="8">
+                    <img src="assets/images/img-10.jpg" alt="Memory 9" loading="lazy">
+                    <div class="carousel-number">09 / 13</div>
+                </div>
+                <div class="carousel-slide" data-index="9">
+                    <img src="assets/images/img-11.jpg" alt="Memory 10" loading="lazy">
+                    <div class="carousel-number">10 / 13</div>
+                </div>
+                <div class="carousel-slide" data-index="10">
+                    <img src="assets/images/img-12.jpg" alt="Memory 11" loading="lazy">
+                    <div class="carousel-number">11 / 13</div>
+                </div>
+                <div class="carousel-slide" data-index="11">
+                    <img src="assets/images/img-13.jpg" alt="Memory 12" loading="lazy">
+                    <div class="carousel-number">12 / 13</div>
+                </div>
+                <div class="carousel-slide" data-index="12">
+                    <img src="assets/images/img-14.jpg" alt="Memory 13" loading="lazy">
+                    <div class="carousel-number">13 / 13</div>
+                </div>
+                <div class="carousel-dots" id="carouselDots"></div>
+            </div>
             <h1>Happy Birthday Anshika</h1>
             <p class="subtitle">To the girl who turned a random game into my forever</p>
             <p class="tagline">"I never knew someone could feel this special..."</p>
@@ -1937,11 +2110,73 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
                 const rect = ctrlBtn.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
-                ctrlBtn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px) scale(1.08)`;
+                ctrlBtn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) scale(1.1)`;
             });
             ctrlBtn.addEventListener('mouseleave', () => {
                 ctrlBtn.style.transform = '';
             });
+        }
+
+        /* ============================================
+           HERO CAROUSEL
+           Auto-cycling slideshow with numbered dots
+           ============================================ */
+        const carouselSlides = document.querySelectorAll('.carousel-slide');
+        const carouselDotsContainer = document.getElementById('carouselDots');
+        let currentSlide = 0;
+        const slideInterval = 4000;
+
+        // Build dots dynamically
+        if (carouselDotsContainer) {
+            carouselSlides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                dot.addEventListener('click', () => showSlide(i));
+                carouselDotsContainer.appendChild(dot);
+            });
+        }
+        const carouselDots = document.querySelectorAll('.carousel-dot');
+
+        function showSlide(index) {
+            carouselSlides.forEach((s, i) => s.classList.toggle('active', i === index));
+            carouselDots.forEach((d, i) => d.classList.toggle('active', i === index));
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            showSlide((currentSlide + 1) % carouselSlides.length);
+        }
+
+        let carouselTimer = setInterval(nextSlide, slideInterval);
+
+        // Pause on hover
+        const heroCarousel = document.getElementById('heroCarousel');
+        if (heroCarousel) {
+            heroCarousel.addEventListener('mouseenter', () => clearInterval(carouselTimer));
+            heroCarousel.addEventListener('mouseleave', () => {
+                clearInterval(carouselTimer);
+                carouselTimer = setInterval(nextSlide, slideInterval);
+            });
+        }
+
+        /* ============================================
+           MOMENT SCROLL ANIMATIONS
+           IntersectionObserver for active slide focus
+           ============================================ */
+        const momentSlides = document.querySelectorAll('.moment-slide');
+        const scrollContainer = document.querySelector('.moments-scroll');
+
+        if (scrollContainer && momentSlides.length > 0) {
+            const momentObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    entry.target.classList.toggle('active', entry.isIntersecting);
+                });
+            }, {
+                root: scrollContainer,
+                threshold: 0.55
+            });
+
+            momentSlides.forEach(slide => momentObserver.observe(slide));
         }
     </script>
 </body>
