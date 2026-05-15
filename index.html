@@ -7,7 +7,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -16,39 +16,42 @@
            CSS VARIABLES & RESET
            ============================================ */
         :root {
-            --primary: #e91e63;
-            --primary-dark: #c2185b;
-            --primary-light: #f8bbd0;
-            --bg: #fff5f7;
-            --white: #ffffff;
-            --text: #333333;
-            --text-light: #666666;
-            --card-bg: #ffffff;
-            --shadow: rgba(233, 30, 99, 0.15);
+            --bg-dark: #0a0a0f;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --pink: #ff4d6d;
+            --pink-light: #ff758f;
+            --pink-glow: rgba(255, 77, 109, 0.4);
+            --purple: #7b2d8e;
+            --purple-deep: #2d0a3e;
+            --gold: #ffd700;
+            --gold-soft: #f0c050;
+            --rose: #e91e63;
+            --text-light: #f0e6f6;
+            --text-muted: #b8a9c9;
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --font-script: 'Dancing Script', cursive;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Poppins', sans-serif;
+            --font-vibes: 'Great Vibes', cursive;
             --border-radius: 16px;
             --transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg);
-            color: var(--text);
+            font-family: var(--font-sans);
+            background: var(--bg-dark);
+            color: var(--text-light);
             overflow-x: hidden;
-            line-height: 1.7;
+            line-height: 1.6;
         }
 
         h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
+            font-family: var(--font-serif);
             font-weight: 600;
         }
 
@@ -96,16 +99,18 @@
 
         .loader-heart {
             font-size: 3rem;
-            color: var(--primary);
+            color: var(--pink);
             animation: heartbeat 1.2s ease infinite;
         }
 
         .loader-text {
             margin-top: 20px;
             color: white;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            letter-spacing: 2px;
+            font-family: var(--font-vibes);
+            font-size: 2rem;
+            letter-spacing: 4px;
+            animation: fadeInUp 1s ease 0.3s forwards;
+            opacity: 0;
         }
 
         .loader-bar {
@@ -120,7 +125,7 @@
         .loader-bar-inner {
             width: 0%;
             height: 100%;
-            background: var(--primary);
+            background: var(--pink);
             border-radius: 2px;
             animation: loadBar 2s ease forwards;
         }
@@ -138,16 +143,16 @@
         }
 
         ::-webkit-scrollbar-track {
-            background: var(--bg);
+            background: var(--bg-dark);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+            background: linear-gradient(180deg, var(--pink), var(--purple));
             border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, var(--primary-dark), var(--primary));
+            background: linear-gradient(180deg, var(--purple), var(--pink));
         }
 
         /* ============================================
@@ -165,7 +170,7 @@
            GRADIENT TEXT
            ============================================ */
         .gradient-text {
-            background: linear-gradient(135deg, var(--primary) 0%, #ff80ab 50%, #f50057 100%);
+            background: linear-gradient(135deg, var(--pink) 0%, var(--gold-soft) 50%, var(--purple) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -191,9 +196,9 @@
            NEON GLOW TEXT
            ============================================ */
         .neon-glow {
-            text-shadow: 0 0 10px rgba(233, 30, 99, 0.5),
-                         0 0 20px rgba(233, 30, 99, 0.3),
-                         0 0 30px rgba(233, 30, 99, 0.2);
+            text-shadow: 0 0 10px var(--pink-glow),
+                         0 0 20px rgba(255, 77, 109, 0.3),
+                         0 0 30px rgba(255, 77, 109, 0.2);
         }
 
         /* ============================================
@@ -214,85 +219,6 @@
             50% { opacity: 0; }
         }
 
-        /* ============================================
-           AUDIO CONTROL BAR (Fixed Bottom)
-           ============================================ */
-        .audio-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid var(--primary-light);
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            z-index: 1000;
-            box-shadow: 0 -4px 20px var(--shadow);
-        }
-
-        .audio-bar .song-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-            color: var(--text-light);
-            max-width: 140px;
-        }
-
-        .audio-bar .song-info i {
-            color: var(--primary);
-            font-size: 1.1rem;
-        }
-
-        .audio-bar .ctrl-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            transition: var(--transition);
-            box-shadow: 0 4px 12px var(--shadow);
-        }
-
-        .audio-bar .ctrl-btn:hover {
-            background: var(--primary-dark);
-            transform: scale(1.08);
-        }
-
-        .audio-bar .volume-wrap {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .audio-bar input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100px;
-            height: 4px;
-            background: var(--primary-light);
-            border-radius: 2px;
-            outline: none;
-        }
-
-        .audio-bar input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 14px;
-            height: 14px;
-            background: var(--primary);
-            border-radius: 50%;
-            cursor: pointer;
-        }
 
         /* ============================================
            HERO SECTION
@@ -418,8 +344,9 @@
             margin: 0 auto 24px;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(255,77,109,0.15);
+            background: linear-gradient(135deg, var(--purple-deep), #1a0a2e);
+            border: 1px solid var(--glass-border);
         }
 
         .hero-carousel .carousel-slide {
@@ -433,7 +360,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            background: linear-gradient(135deg, var(--purple-deep), #1a0a2e);
         }
 
         .hero-carousel .carousel-slide.active {
@@ -513,33 +440,51 @@
            SECTION COMMON STYLES
            ============================================ */
         section {
+            position: relative;
             padding: 80px 20px;
-            max-width: 1100px;
-            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        section > *:not(.section-bg) {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .section-bg img, .section-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(12px) brightness(0.45) saturate(1.3);
+            transform: scale(1.15);
+        }
+
+        .section-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(10, 10, 15, 0.35), rgba(45, 10, 62, 0.3), rgba(10, 10, 15, 0.35));
         }
 
         .section-title {
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
-            color: var(--primary-dark);
             text-align: center;
-            margin-bottom: 16px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 3px;
-            background: var(--primary);
-            margin: 12px auto 0;
-            border-radius: 2px;
+            font-family: var(--font-vibes);
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 50px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
         }
 
         .section-subtitle {
             text-align: center;
-            color: var(--text-light);
-            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-size: 1rem;
             margin-bottom: 50px;
             max-width: 600px;
             margin-left: auto;
@@ -570,20 +515,20 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.55);
         }
 
         .parallax-text {
             position: relative;
             z-index: 1;
-            color: white;
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.4rem, 4vw, 2.2rem);
+            font-family: var(--font-serif);
             font-style: italic;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-light);
             text-align: center;
             padding: 0 20px;
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            opacity: 0.95;
+            max-width: 800px;
         }
 
         /* ============================================
@@ -597,11 +542,11 @@
         .timeline::before {
             content: '';
             position: absolute;
-            left: 6px;
+            left: 0;
             top: 0;
             bottom: 0;
             width: 2px;
-            background: linear-gradient(to bottom, var(--primary-light), var(--primary));
+            background: linear-gradient(to bottom, var(--purple), var(--pink));
             border-radius: 1px;
         }
 
@@ -625,16 +570,16 @@
             top: 4px;
             width: 16px;
             height: 16px;
-            background: var(--primary);
-            border: 3px solid var(--white);
+            background: var(--pink);
+            border: 3px solid var(--bg-dark);
             border-radius: 50%;
-            box-shadow: 0 0 0 3px var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.3);
             animation: pulseGlow 2s ease infinite;
         }
 
         .timeline-date {
             font-size: 0.8rem;
-            color: var(--primary);
+            color: var(--pink);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -642,26 +587,26 @@
         }
 
         .timeline-card {
-            background: rgba(255, 255, 255, 0.85);
+            background: var(--glass-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             padding: 24px;
             border-radius: var(--border-radius);
-            box-shadow: 0 8px 30px var(--shadow), 0 0 20px rgba(233, 30, 99, 0.08);
-            border-left: 4px solid var(--primary);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3), 0 0 20px rgba(255, 77, 109, 0.08);
+            border-left: 4px solid var(--pink);
+            border: 1px solid var(--glass-border);
             transition: var(--transition);
         }
 
         .timeline-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 40px var(--shadow), 0 0 30px rgba(233, 30, 99, 0.15);
-            border-left: 4px solid var(--primary-dark);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255, 77, 109, 0.15);
+            border-left: 4px solid var(--purple);
         }
 
         .timeline-card h3 {
             font-size: 1.15rem;
-            color: var(--primary-dark);
+            color: var(--pink-light);
             margin-bottom: 8px;
         }
 
@@ -677,7 +622,7 @@
             display: block;
             border-radius: 12px;
             margin: 14px auto 4px;
-            box-shadow: 0 4px 12px var(--shadow);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         /* ============================================
@@ -699,8 +644,8 @@
             overflow-y: scroll;
             scroll-snap-type: y mandatory;
             position: relative;
-            box-shadow: 0 20px 60px var(--shadow);
-            background: var(--bg);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            background: var(--bg-dark);
         }
 
         .moment-slide {
@@ -712,7 +657,7 @@
             gap: 30px;
             padding: 30px 40px;
             position: relative;
-            background: linear-gradient(180deg, var(--bg) 0%, #fff0f3 100%);
+            background: linear-gradient(180deg, var(--bg-dark) 0%, rgba(45,10,62,0.3) 100%);
             opacity: 0.35;
             transform: scale(0.92);
             transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
@@ -724,15 +669,15 @@
         }
 
         .moment-slide:nth-child(even) {
-            background: linear-gradient(180deg, #fff0f3 0%, var(--bg) 100%);
+            background: linear-gradient(180deg, rgba(45,10,62,0.3) 0%, var(--bg-dark) 100%);
         }
 
         .moment-number {
             position: absolute;
             top: 20px;
             right: 24px;
-            background: rgba(233, 30, 99, 0.1);
-            color: var(--primary);
+            background: rgba(255, 77, 109, 0.15);
+            color: var(--pink);
             font-size: 0.85rem;
             font-weight: 700;
             padding: 8px 18px;
@@ -748,10 +693,11 @@
             max-height: calc(100vh - 140px);
             border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 30px rgba(233, 30, 99, 0.1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 30px rgba(255, 77, 109, 0.1);
             cursor: pointer;
             transition: var(--transition);
-            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -759,7 +705,7 @@
 
         .moment-media:hover {
             transform: translateY(-4px) scale(1.01);
-            box-shadow: 0 24px 70px rgba(0,0,0,0.2), 0 0 40px rgba(233, 30, 99, 0.15);
+            box-shadow: 0 24px 70px rgba(0,0,0,0.5), 0 0 40px rgba(255, 77, 109, 0.15);
         }
 
         .moment-media img,
@@ -775,7 +721,7 @@
 
         .moment-text {
             text-align: left;
-            color: var(--text);
+            color: var(--text-muted);
             font-size: 1.15rem;
             line-height: 2;
             font-style: italic;
@@ -784,18 +730,18 @@
 
         .moment-text p::before {
             content: '"';
-            font-family: 'Playfair Display', serif;
+            font-family: var(--font-serif);
             font-size: 2rem;
-            color: var(--primary);
+            color: var(--pink);
             margin-right: 4px;
             line-height: 0;
         }
 
         .moment-text p::after {
             content: '"';
-            font-family: 'Playfair Display', serif;
+            font-family: var(--font-serif);
             font-size: 2rem;
-            color: var(--primary);
+            color: var(--pink);
             margin-left: 4px;
             line-height: 0;
         }
@@ -805,7 +751,7 @@
             bottom: 16px;
             left: 50%;
             transform: translateX(-50%);
-            color: var(--text-light);
+            color: var(--text-muted);
             font-size: 0.75rem;
             opacity: 0.5;
             animation: bounce 2s infinite;
@@ -818,15 +764,13 @@
         .lightbox {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.92);
-            z-index: 2000;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            z-index: 10000;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
         }
 
         .lightbox.active {
@@ -835,26 +779,27 @@
 
         .lightbox img,
         .lightbox video {
-            max-width: 90%;
-            max-height: 85vh;
-            border-radius: 8px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 0 60px rgba(255,77,109,0.3);
         }
 
         .lightbox-close {
             position: absolute;
             top: 20px;
             right: 30px;
-            color: white;
             font-size: 2rem;
+            color: #fff;
             cursor: pointer;
             background: none;
             border: none;
+            z-index: 10001;
             transition: var(--transition);
         }
 
         .lightbox-close:hover {
-            color: var(--primary-light);
+            color: var(--pink-light);
             transform: scale(1.1);
         }
 
@@ -872,24 +817,24 @@
            POEMS SECTION
            ============================================ */
         .poem-card {
-            background: rgba(255, 255, 255, 0.88);
+            background: var(--glass-bg);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             padding: 40px 32px;
             border-radius: var(--border-radius);
-            box-shadow: 0 8px 30px var(--shadow), 0 0 25px rgba(233, 30, 99, 0.08);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3), 0 0 25px rgba(255, 77, 109, 0.08);
             margin-bottom: 30px;
             position: relative;
             overflow: hidden;
             display: flex;
             gap: 28px;
             align-items: flex-start;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--glass-border);
             transition: var(--transition);
         }
 
         .poem-card:hover {
-            box-shadow: 0 12px 40px var(--shadow), 0 0 40px rgba(233, 30, 99, 0.15);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 40px rgba(255, 77, 109, 0.15);
             transform: translateY(-3px);
         }
 
@@ -900,7 +845,7 @@
             width: auto;
             border-radius: 12px;
             flex-shrink: 0;
-            box-shadow: 0 4px 16px var(--shadow);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
             display: block;
         }
 
@@ -913,22 +858,22 @@
             position: absolute;
             top: -10px;
             left: 16px;
-            font-family: 'Playfair Display', serif;
+            font-family: var(--font-serif);
             font-size: 6rem;
-            color: var(--primary-light);
-            opacity: 0.4;
+            color: var(--pink);
+            opacity: 0.2;
             line-height: 1;
         }
 
         .poem-card h3 {
-            color: var(--primary-dark);
+            color: var(--pink-light);
             margin-bottom: 20px;
             font-size: 1.3rem;
             padding-left: 20px;
         }
 
         .poem-card p {
-            color: var(--text);
+            color: var(--text-muted);
             font-size: 0.95rem;
             line-height: 2.2;
             padding-left: 20px;
@@ -939,7 +884,7 @@
             text-align: right;
             margin-top: 20px;
             font-style: italic;
-            color: var(--primary);
+            color: var(--pink);
             font-size: 0.9rem;
         }
 
@@ -953,39 +898,39 @@
         }
 
         .quote-card {
-            background: rgba(255, 255, 255, 0.85);
+            background: var(--glass-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             padding: 32px 28px;
             border-radius: var(--border-radius);
-            box-shadow: 0 4px 20px var(--shadow), 0 0 15px rgba(233, 30, 99, 0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 15px rgba(255, 77, 109, 0.05);
             transition: var(--transition);
-            border-top: 3px solid var(--primary);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-top: 3px solid var(--pink);
+            border: 1px solid var(--glass-border);
         }
 
         .quote-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 16px 40px var(--shadow), 0 0 30px rgba(233, 30, 99, 0.12);
-            border-top: 3px solid var(--primary-dark);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255, 77, 109, 0.12);
+            border-top: 3px solid var(--purple);
         }
 
         .quote-card .icon {
             font-size: 1.5rem;
-            color: var(--primary);
+            color: var(--pink);
             margin-bottom: 14px;
         }
 
         .quote-card p {
             font-size: 0.92rem;
-            color: var(--text);
+            color: var(--text-muted);
             line-height: 1.9;
             margin-bottom: 14px;
         }
 
         .quote-card .author {
             font-size: 0.8rem;
-            color: var(--primary);
+            color: var(--pink);
             font-weight: 600;
         }
 
@@ -993,33 +938,21 @@
            BIRTHDAY MESSAGE SECTION
            ============================================ */
         .birthday-message {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: radial-gradient(ellipse at center, var(--purple-deep), var(--bg-dark));
             border-radius: var(--border-radius);
             padding: 60px 40px;
             text-align: center;
-            color: white;
+            color: var(--text-light);
             position: relative;
             overflow: hidden;
-        }
-
-        .birthday-message::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            border: 1px solid var(--glass-border);
         }
 
         .birthday-message h2 {
-            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-family: var(--font-vibes);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--pink-light);
+            text-shadow: 0 0 40px var(--pink-glow);
             margin-bottom: 24px;
             position: relative;
             z-index: 1;
@@ -1033,13 +966,15 @@
             position: relative;
             z-index: 1;
             opacity: 0.95;
+            color: var(--text-muted);
         }
 
         .birthday-message .signature {
             margin-top: 30px;
-            font-family: 'Playfair Display', serif;
+            font-family: var(--font-vibes);
             font-style: italic;
-            font-size: 1.1rem;
+            font-size: 1.5rem;
+            color: var(--gold-soft);
             position: relative;
             z-index: 1;
         }
@@ -1055,13 +990,78 @@
         }
 
         footer .heart-icon {
-            color: var(--primary);
+            color: var(--pink);
             animation: heartbeat 1.5s ease infinite;
         }
 
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.2); }
+        }
+
+        /* ============================================
+           SCROLL PROGRESS BAR
+           ============================================ */
+        .scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--pink), var(--gold), var(--purple));
+            z-index: 9999;
+            transition: width 0.1s linear;
+            width: 0%;
+        }
+
+        /* ============================================
+           SECTION DIVIDER
+           ============================================ */
+        .section-divider {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 1.5rem;
+            letter-spacing: 15px;
+            color: var(--pink);
+            opacity: 0.4;
+        }
+
+        /* ============================================
+           MUSIC PLAYER (Fixed Bottom-Right)
+           ============================================ */
+        .music-player {
+            position: fixed;
+            bottom: 20px; right: 20px;
+            z-index: 1000;
+            background: linear-gradient(135deg, rgba(123,45,142,0.9), rgba(255,77,109,0.9));
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            border-radius: 50px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(255,77,109,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .music-player:hover { transform: scale(1.05); }
+
+        .music-player .music-icon {
+            font-size: 1.5rem;
+            animation: musicBounce 1s ease-in-out infinite;
+        }
+
+        .music-player.paused .music-icon { animation: none; }
+
+        @keyframes musicBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .music-player .music-label {
+            font-family: var(--font-script);
+            font-size: 0.9rem;
+            color: #fff;
         }
 
         /* ============================================
@@ -1142,14 +1142,11 @@
                 padding: 40px 24px;
             }
 
-            .audio-bar {
-                padding: 10px 14px;
-                gap: 10px;
+            .music-player {
+                padding: 10px 16px;
+                bottom: 12px; right: 12px;
             }
-
-            .audio-bar input[type="range"] {
-                width: 70px;
-            }
+            .music-player .music-label { font-size: 0.8rem; }
 
             .hero-profile {
                 width: 90px;
@@ -1163,9 +1160,7 @@
         }
 
         @media (max-width: 480px) {
-            .audio-bar .song-info span {
-                display: none;
-            }
+            .music-player .music-label { display: none; }
         }
     </style>
 </head>
@@ -1178,22 +1173,13 @@
         <div class="loader-bar"><div class="loader-bar-inner"></div></div>
     </div>
 
-    <!-- ============================================
-         AUDIO CONTROL BAR (Fixed Bottom)
-         Background music with user controls
-         ============================================ -->
-    <div class="audio-bar">
-        <div class="song-info">
-            <i class="fas fa-music"></i>
-            <span>Soft Piano</span>
-        </div>
-        <button class="ctrl-btn" id="playPauseBtn" aria-label="Play or pause music">
-            <i class="fas fa-play"></i>
-        </button>
-        <div class="volume-wrap">
-            <i class="fas fa-volume-up" style="color: var(--primary); font-size: 0.85rem;"></i>
-            <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.5" aria-label="Volume">
-        </div>
+    <!-- SCROLL PROGRESS BAR -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- MUSIC PLAYER (Fixed Bottom-Right) -->
+    <div class="music-player paused" id="musicPlayer">
+        <span class="music-icon">🎵</span>
+        <span class="music-label">Soft Piano</span>
     </div>
 
     <!-- Background audio element -->
@@ -1282,6 +1268,8 @@
             <i class="fas fa-chevron-down"></i>
         </div>
     </section>
+
+    <div class="section-divider">♥ ♥ ♥ ♥ ♥</div>
 
     <!-- ============================================
          STORY / TIMELINE SECTION
@@ -1667,6 +1655,8 @@
         </div>
     </section>
 
+    <div class="section-divider">♥ ♥ ♥ ♥ ♥</div>
+
     <!-- Lightbox Modal -->
     <div class="lightbox" id="lightbox">
         <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox"><i class="fas fa-times"></i></button>
@@ -1741,6 +1731,8 @@ You are my Anshika, and you always will be.</p>
             </div>
         </div>
     </section>
+
+    <div class="section-divider">♥ ♥ ♥ ♥ ♥</div>
 
     <!-- ============================================
          QUOTES / MESSAGES SECTION
@@ -1928,45 +1920,49 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
         });
 
         /* ============================================
-           AUDIO CONTROLS
-           Play/pause and volume for background music
+           MUSIC PLAYER (Tripti style)
+           Fixed bottom-right play/pause toggle
            ============================================ */
         const audio = document.getElementById('bgAudio');
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const volumeSlider = document.getElementById('volumeSlider');
+        const musicPlayer = document.getElementById('musicPlayer');
         let isPlaying = false;
 
-        // Initialize volume
-        audio.volume = parseFloat(volumeSlider.value);
+        audio.volume = 0.5;
 
-        // Toggle play/pause
-        playPauseBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                audio.pause();
-                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-                isPlaying = false;
-            } else {
-                // Try to play (browsers may block autoplay until user interaction)
-                audio.play().then(() => {
-                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                    isPlaying = true;
-                }).catch(err => {
-                    console.log('Audio playback blocked by browser. User interaction required first.');
-                    alert('Please click anywhere on the page first, then try playing the music.');
-                });
-            }
-        });
+        if (musicPlayer) {
+            musicPlayer.addEventListener('click', () => {
+                if (isPlaying) {
+                    audio.pause();
+                    musicPlayer.classList.add('paused');
+                    isPlaying = false;
+                } else {
+                    audio.play().then(() => {
+                        musicPlayer.classList.remove('paused');
+                        isPlaying = true;
+                    }).catch(() => {
+                        console.log('Audio playback blocked. User interaction required first.');
+                    });
+                }
+            });
+        }
 
-        // Volume control
-        volumeSlider.addEventListener('input', () => {
-            audio.volume = parseFloat(volumeSlider.value);
-        });
-
-        // Audio ended callback (in case loop fails)
         audio.addEventListener('ended', () => {
             audio.currentTime = 0;
             audio.play().catch(() => {});
         });
+
+        /* ============================================
+           SCROLL PROGRESS BAR
+           ============================================ */
+        const scrollProgress = document.getElementById('scrollProgress');
+        if (scrollProgress) {
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = (scrollTop / docHeight) * 100;
+                scrollProgress.style.width = progress + '%';
+            });
+        }
 
         /* ============================================
            LAZY LOADING FOR IMAGES
@@ -2109,9 +2105,9 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
         });
 
         /* ============================================
-           MAGNETIC BUTTON (Audio Play/Pause)
+           MAGNETIC BUTTON (Music Player)
            ============================================ */
-        const ctrlBtn = document.getElementById('playPauseBtn');
+        const ctrlBtn = document.getElementById('musicPlayer');
         if (ctrlBtn) {
             ctrlBtn.addEventListener('mousemove', (e) => {
                 const rect = ctrlBtn.getBoundingClientRect();
