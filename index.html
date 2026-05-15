@@ -14,18 +14,7 @@
     <link rel="stylesheet" href="styles.css">
 
     <style>
-        /* Budday-specific styles that don't conflict with Tripti */
-        .page-loader {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #1a0a1a 0%, #2d0a1e 50%, #1a0a1a 100%);
-            z-index: 99999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-        }
+        .page-loader { position: fixed; inset: 0; background: linear-gradient(135deg, #1a0a1a 0%, #2d0a1e 50%, #1a0a1a 100%); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease, visibility 0.8s ease; }
         .page-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .loader-heart { font-size: 3rem; color: var(--pink); animation: heartbeat 1.2s ease infinite; }
         .loader-text { margin-top: 20px; color: white; font-family: var(--font-vibes); font-size: 2rem; letter-spacing: 4px; }
@@ -33,14 +22,69 @@
         .loader-bar-inner { width: 0%; height: 100%; background: var(--pink); border-radius: 2px; animation: loadBar 2s ease forwards; }
         @keyframes loadBar { 0% { width: 0%; } 100% { width: 100%; } }
 
-        /* Budday custom components */
-        .timeline { position: relative; padding-left: 20px; }
+        .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .hero-content { position: relative; z-index: 2; text-align: center; padding: 20px; max-width: 900px; }
+        .hero h1 { font-family: var(--font-vibes); font-size: clamp(3rem, 8vw, 5.5rem); color: var(--gold); margin-bottom: 16px; text-shadow: 0 0 40px rgba(255, 215, 0, 0.4); }
+        .hero-tagline { font-family: var(--font-script); font-size: clamp(1.2rem, 3vw, 1.8rem); color: var(--text-light); margin-bottom: 40px; }
+        .hero-profile { width: 140px; height: 140px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.2); overflow: hidden; margin: 0 auto 30px; box-shadow: 0 0 30px rgba(255,77,109,0.3); }
+        .hero-profile img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-carousel { position: relative; width: min(90vw, 520px); height: 400px; border-radius: 20px; overflow: hidden; margin: 0 auto; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .carousel-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s ease; }
+        .carousel-slide.active { opacity: 1; }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .carousel-number { position: absolute; top: 20px; right: 20px; background: rgba(255,77,109,0.2); color: var(--pink); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; z-index: 3; }
+        .carousel-nav { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 3; }
+        .carousel-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: all 0.3s ease; border: none; }
+        .carousel-dot.active { background: var(--pink); transform: scale(1.3); }
+        .scroll-indicator { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.6); font-size: 1.5rem; animation: bounce 2s infinite; cursor: pointer; z-index: 10; }
+
+        .timeline { position: relative; padding-left: 30px; max-width: 720px; margin: 0 auto; }
         .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--pink), var(--purple), transparent); }
-        .timeline-item { position: relative; padding: 24px 0 24px 32px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .moments-scroll { display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 20px 0 40px; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .timeline-item { position: relative; padding: 28px 0 28px 36px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .timeline-dot { position: absolute; left: -6px; top: 32px; width: 14px; height: 14px; background: var(--pink); border-radius: 50%; box-shadow: 0 0 20px var(--pink-glow); }
+        .timeline-date { font-family: var(--font-script); color: var(--gold-soft); font-size: 1.1rem; margin-bottom: 10px; display: block; }
+        .timeline-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; margin-top: 10px; }
+        .timeline-card h3 { font-family: var(--font-script); color: var(--pink-light); font-size: 1.4rem; margin-bottom: 12px; }
+        .timeline-card p { color: var(--text-muted); font-size: 1rem; line-height: 1.7; margin-bottom: 16px; }
+        .timeline-img { width: 100%; max-width: 400px; height: auto; border-radius: 8px; object-fit: cover; display: block; margin: 0 auto; }
+
+        .moments-scroll { display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 20px 0 40px; scrollbar-width: none; }
         .moments-scroll::-webkit-scrollbar { display: none; }
-        .moment-slide { flex: 0 0 auto; width: min(70vw, 320px); scroll-snap-align: center; position: relative; border-radius: 16px; overflow: hidden; }
-        .moment-slide img { width: 100%; height: 420px; object-fit: cover; display: block; }
+        .moment-slide { flex: 0 0 auto; width: min(70vw, 320px); scroll-snap-align: center; border-radius: 16px; overflow: hidden; }
+        .moment-slide img { width: 100%; height: 340px; object-fit: cover; display: block; }
+
+        .poem-card { max-width: 700px; margin: 0 auto 50px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--border-radius, 16px); overflow: hidden; }
+        .poem-card img { width: 100%; height: 220px; object-fit: cover; display: block; filter: brightness(0.85); }
+        .poem-content { padding: 36px; }
+        .poem-content h3 { font-family: var(--font-vibes); color: var(--gold); font-size: 2.2rem; margin-bottom: 20px; text-align: center; }
+        .poem-content p { font-family: var(--font-script); color: var(--text-light); font-size: 1.2rem; line-height: 2.2; text-align: center; white-space: pre-line; }
+        .poem-content .for-you { text-align: right; font-family: var(--font-script); color: var(--pink-light); font-size: 1.2rem; margin-top: 24px; font-style: italic; }
+
+        .message-card { max-width: 760px; margin: 0 auto 40px; padding: 44px 40px; background: linear-gradient(135deg, rgba(255,77,109,0.08), rgba(123,45,142,0.08)); border-left: 3px solid var(--pink); border-radius: 0 var(--border-radius, 16px) var(--border-radius, 16px) 0; position: relative; }
+        .message-card .quote { font-family: var(--font-script); font-size: 1.3rem; color: var(--text-light); line-height: 2; font-style: italic; }
+        .message-card .author { text-align: right; font-family: var(--font-vibes); color: var(--gold-soft); font-size: 1.4rem; margin-top: 20px; }
+
+        .birthday-message { max-width: 840px; margin: 0 auto; padding: 70px 50px; background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--border-radius, 16px); text-align: center; position: relative; }
+        .birthday-message h2 { font-family: var(--font-vibes); font-size: 4rem; color: var(--gold); margin-bottom: 36px; }
+        .birthday-message p { font-family: var(--font-script); font-size: 1.35rem; line-height: 2.4; color: var(--text-light); margin-bottom: 28px; }
+        .birthday-message .signature { font-family: var(--font-vibes); font-size: 2rem; color: var(--pink-light); margin-top: 36px; }
+
+        .section-subtitle { text-align: center; font-family: var(--font-script); color: var(--text-muted); font-size: 1.2rem; margin-bottom: 60px; margin-top: -30px; }
+        .parallax-section { background-attachment: scroll !important; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero-carousel { width: 90vw; height: 300px; }
+            .section-title { font-size: 2.2rem; }
+            .timeline { padding-left: 20px; }
+            .timeline-item { padding: 20px 0 20px 24px; }
+            .timeline-dot { left: -5px; top: 24px; width: 12px; height: 12px; }
+            .timeline-card { padding: 16px; }
+            .timeline-card h3 { font-size: 1.2rem; }
+            .timeline-img { max-width: 100%; }
+            .moment-slide { width: 80vw; }
+            .moment-slide img { height: 280px; }
+        }
     </style>
 </head>
 <body>
