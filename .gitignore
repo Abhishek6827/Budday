@@ -1,0 +1,16 @@
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Local env files
+.env
+.env.local

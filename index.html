@@ -232,6 +232,8 @@
             justify-content: center;
             text-align: center;
             overflow: hidden;
+            width: 100%;
+            padding: 0;
         }
 
         .hero-bg {
@@ -288,10 +290,14 @@
             z-index: 2;
             padding: 0 20px;
             max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .hero-content h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-size: clamp(2rem, 6vw, 4rem);
             color: white;
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             margin-bottom: 16px;
@@ -300,7 +306,7 @@
         }
 
         .hero-content .subtitle {
-            font-size: clamp(1rem, 3vw, 1.4rem);
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
             color: rgba(255, 255, 255, 0.9);
             font-weight: 300;
             margin-bottom: 30px;
@@ -309,9 +315,9 @@
         }
 
         .hero-content .tagline {
-            font-family: 'Playfair Display', serif;
+            font-family: var(--font-serif);
             font-style: italic;
-            font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
             color: rgba(255, 255, 255, 0.85);
             opacity: 0;
             animation: fadeInUp 1s ease 0.9s forwards;
@@ -339,14 +345,15 @@
            ============================================ */
         .hero-carousel {
             position: relative;
-            width: min(85vw, 560px);
-            height: min(45vh, 380px);
+            width: min(90vw, 520px);
+            height: min(50vh, 400px);
             margin: 0 auto 24px;
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(255,77,109,0.15);
             background: linear-gradient(135deg, var(--purple-deep), #1a0a2e);
             border: 1px solid var(--glass-border);
+            align-self: center;
         }
 
         .hero-carousel .carousel-slide {
@@ -1154,8 +1161,8 @@
             }
 
             .hero-carousel {
-                width: min(92vw, 420px);
-                height: min(35vh, 280px);
+                width: min(95vw, 420px);
+                height: min(40vh, 300px);
             }
         }
 
