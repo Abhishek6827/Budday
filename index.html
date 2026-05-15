@@ -136,6 +136,7 @@
 
         .audio-bar input[type="range"] {
             -webkit-appearance: none;
+            appearance: none;
             width: 100px;
             height: 4px;
             background: var(--primary-light);
@@ -172,8 +173,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #ff80ab 0%, #f50057 50%, #c2185b 100%);
-            /* REPLACE WITH: a romantic couple photo or soft gradient bg */
+            background: url('assets/images/img-1.jpg') center center / cover no-repeat;
+            transform: translateZ(0);
+            will-change: transform;
         }
 
         .hero-bg::after {
@@ -183,7 +185,19 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.45);
+        }
+
+        .hero-profile {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.15s forwards;
         }
 
         /* Floating hearts animation */
@@ -306,6 +320,46 @@
         }
 
         /* ============================================
+           PARALLAX IMAGE SECTIONS
+           Full-width beauty shots between content blocks
+           ============================================ */
+        .parallax-section {
+            position: relative;
+            height: 50vh;
+            min-height: 300px;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            max-width: none;
+            padding: 0;
+        }
+
+        .parallax-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        .parallax-text {
+            position: relative;
+            z-index: 1;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.4rem, 4vw, 2.2rem);
+            font-style: italic;
+            text-align: center;
+            padding: 0 20px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            opacity: 0.95;
+        }
+
+        /* ============================================
            STORY / TIMELINE SECTION
            ============================================ */
         .timeline {
@@ -377,6 +431,16 @@
             font-size: 0.9rem;
             color: var(--text-light);
             line-height: 1.8;
+        }
+
+        .timeline-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-top: 14px;
+            margin-bottom: 4px;
+            box-shadow: 0 4px 12px var(--shadow);
         }
 
         /* ============================================
@@ -524,6 +588,22 @@
             margin-bottom: 30px;
             position: relative;
             overflow: hidden;
+            display: flex;
+            gap: 28px;
+            align-items: flex-start;
+        }
+
+        .poem-card .poem-img {
+            width: 220px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 12px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 16px var(--shadow);
+        }
+
+        .poem-card .poem-content {
+            flex: 1;
         }
 
         .poem-card::before {
@@ -694,6 +774,10 @@
                 padding: 18px;
             }
 
+            .timeline-img {
+                height: 140px;
+            }
+
             .gallery-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
                 gap: 12px;
@@ -701,6 +785,20 @@
 
             .poem-card {
                 padding: 28px 20px;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .poem-card .poem-img {
+                width: 100%;
+                height: 200px;
+                margin-bottom: 16px;
+            }
+
+            .parallax-section {
+                background-attachment: scroll;
+                height: 35vh;
+                min-height: 200px;
             }
 
             .birthday-message {
@@ -714,6 +812,11 @@
 
             .audio-bar input[type="range"] {
                 width: 70px;
+            }
+
+            .hero-profile {
+                width: 90px;
+                height: 90px;
             }
         }
 
@@ -767,6 +870,7 @@
         <div class="hero-bg" id="heroBg"></div>
         <!-- Floating hearts will be injected by JS -->
         <div class="hero-content">
+            <img src="assets/images/img-2.jpg" alt="Anshika" class="hero-profile" loading="eager">
             <h1>Happy Birthday Anshika</h1>
             <p class="subtitle">To the girl who turned a random game into my forever</p>
             <p class="tagline">"Koi itna special bhi ho sakta tha... mujhe pata nahi tha."</p>
@@ -791,6 +895,7 @@
                 <div class="timeline-card">
                     <h3>The First Encounter</h3>
                     <p>Ek game, do strangers. Mujhe yaad hai ki pehli baar jab hum mile, toh kuch alag sa tha. Distance tha, hesitation thi, lekin koi unknown sa connection bhi tha jo baad mein samajh aaya.</p>
+                    <img src="assets/images/img-3.jpg" alt="First Encounter" class="timeline-img" loading="lazy">
                 </div>
             </div>
 
@@ -800,6 +905,7 @@
                 <div class="timeline-card">
                     <h3>Same World, Same Dreams</h3>
                     <p>Jaane kaise pata chala ki hum same career field mein hain. Conversations gehraai lene lagi. Topics badal gaye — game se zyada, life ke baare mein baatein hone lagi.</p>
+                    <img src="assets/images/img-4.jpg" alt="Same Dreams" class="timeline-img" loading="lazy">
                 </div>
             </div>
 
@@ -809,6 +915,7 @@
                 <div class="timeline-card">
                     <h3>Chickens & Jealousy</h3>
                     <p>BGMI mein saath khelna, chicken dinners, aur un choti-choti jealousies se bhi trust bana. Doston ki nazar mein tha, lekin hum sirf ek dusre pe focus karte rahe.</p>
+                    <img src="assets/images/img-5.jpg" alt="BGMI Days" class="timeline-img" loading="lazy">
                 </div>
             </div>
 
@@ -818,6 +925,7 @@
                 <div class="timeline-card">
                     <h3>The Friend Request</h3>
                     <p>12 March ko tune friend request bheji. Us din se har din consistent raha — messages, calls, moments. Connection ab sirf game tak nahi tha, dil tak pohunch raha tha.</p>
+                    <img src="assets/images/img-6.jpg" alt="Friend Request" class="timeline-img" loading="lazy">
                 </div>
             </div>
 
@@ -827,6 +935,7 @@
                 <div class="timeline-card">
                     <h3>When She Went Silent</h3>
                     <p>Ek phase aaya jab tu quiet si ho gayi, dull si lagne lagi. Maine bas suna, samjha, aur guidance di. Self-respect aur emotional clarity ki baat ki. Aur tune apni taraf se decision liya.</p>
+                    <img src="assets/images/img-7.jpg" alt="Quiet Phase" class="timeline-img" loading="lazy">
                 </div>
             </div>
 
@@ -836,10 +945,16 @@
                 <div class="timeline-card">
                     <h3>Us — Naturally</h3>
                     <p>Koi formal proposal nahi, koi pressure nahi. Bas organically, naturally, tu ne apne aap mujhe chuna. Aur aaj hum yahan hain — teasing, overthinking, playing, loving. Happy Birthday, meri Anshika.</p>
+                    <img src="assets/images/img-8.jpg" alt="Us Naturally" class="timeline-img" loading="lazy">
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Parallax Divider: Story to Gallery -->
+    <div class="parallax-section reveal" style="background-image: url('assets/images/img-11.jpg');">
+        <p class="parallax-text">"Har pal jo saath bitaya, woh yaadon ki album ban gaya..."</p>
+    </div>
 
     <!-- ============================================
          MEDIA GALLERY
@@ -856,7 +971,6 @@
 
         <div class="gallery-grid">
             <!-- IMAGE 1 -->
-            <!-- REPLACE WITH: img-1.jpg -->
             <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-1.jpg" data-caption="Our First Memory">
                 <img src="assets/images/img-1.jpg" alt="Memory 1" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="media-placeholder" style="display:none;">
@@ -865,9 +979,7 @@
                 </div>
                 <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #1</div>
             </div>
-
             <!-- IMAGE 2 -->
-            <!-- REPLACE WITH: img-2.jpg / img-2.png -->
             <div class="gallery-item reveal reveal-delay-1" data-type="image" data-src="assets/images/img-2.jpg" data-caption="A Beautiful Moment">
                 <img src="assets/images/img-2.jpg" alt="Memory 2" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="media-placeholder" style="display:none;">
@@ -876,21 +988,8 @@
                 </div>
                 <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #2</div>
             </div>
-
-            <!-- VIDEO 1 -->
-            <!-- REPLACE WITH: vid-1.mp4 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="video" data-src="assets/videos/vid-1.mp4" data-caption="A Special Video">
-                <video src="assets/videos/vid-1.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
-                <div class="media-placeholder" style="display:none;">
-                    <i class="fas fa-video"></i>
-                    <span>Media loading...<br><small>Place vid-1.mp4 in assets/videos/</small></span>
-                </div>
-                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #1</div>
-            </div>
-
             <!-- IMAGE 3 -->
-            <!-- REPLACE WITH: img-3.jpg -->
-            <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-3.jpg" data-caption="Another Memory">
+            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-3.jpg" data-caption="That Smile">
                 <img src="assets/images/img-3.jpg" alt="Memory 3" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="media-placeholder" style="display:none;">
                     <i class="fas fa-image"></i>
@@ -898,9 +997,7 @@
                 </div>
                 <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #3</div>
             </div>
-
             <!-- IMAGE 4 -->
-            <!-- REPLACE WITH: img-4.jpg -->
             <div class="gallery-item reveal reveal-delay-1" data-type="image" data-src="assets/images/img-4.jpg" data-caption="Us Together">
                 <img src="assets/images/img-4.jpg" alt="Memory 4" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="media-placeholder" style="display:none;">
@@ -909,16 +1006,257 @@
                 </div>
                 <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #4</div>
             </div>
-
+            <!-- IMAGE 5 -->
+            <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-5.jpg" data-caption="Candid Shot">
+                <img src="assets/images/img-5.jpg" alt="Memory 5" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-image"></i>
+                    <span>Media loading...<br><small>Place img-5.jpg in assets/images/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #5</div>
+            </div>
+            <!-- IMAGE 6 -->
+            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-6.jpg" data-caption="Perfect Day">
+                <img src="assets/images/img-6.jpg" alt="Memory 6" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-image"></i>
+                    <span>Media loading...<br><small>Place img-6.jpg in assets/images/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #6</div>
+            </div>
+            <!-- IMAGE 7 -->
+            <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-7.jpg" data-caption="Laughing Together">
+                <img src="assets/images/img-7.jpg" alt="Memory 7" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-image"></i>
+                    <span>Media loading...<br><small>Place img-7.jpg in assets/images/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #7</div>
+            </div>
+            <!-- IMAGE 8 -->
+            <div class="gallery-item reveal reveal-delay-1" data-type="image" data-src="assets/images/img-8.jpg" data-caption="Those Eyes">
+                <img src="assets/images/img-8.jpg" alt="Memory 8" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-image"></i>
+                    <span>Media loading...<br><small>Place img-8.jpg in assets/images/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #8</div>
+            </div>
+            <!-- IMAGE 9 -->
+            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-9.jpg" data-caption="Memories">
+                <img src="assets/images/img-9.jpg" alt="Memory 9" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-image"></i>
+                    <span>Media loading...<br><small>Place img-9.jpg in assets/images/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #9</div>
+            </div>
+            <!-- IMAGE 10 -->
+            <div class="gallery-item reveal reveal-delay-1" data-type="image" data-src="assets/images/img-10.jpg" data-caption="Happiness">
+                <img src="assets/images/img-10.jpg" alt="Memory 10" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-image"></i>
+                    <span>Media loading...<br><small>Place img-10.jpg in assets/images/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #10</div>
+            </div>
+            <!-- IMAGE 11 -->
+            <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-11.jpg" data-caption="Crazy Us">
+                <img src="assets/images/img-11.jpg" alt="Memory 11" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-image"></i>
+                    <span>Media loading...<br><small>Place img-11.jpg in assets/images/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #11</div>
+            </div>
+            <!-- IMAGE 12 -->
+            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-12.jpg" data-caption="Simply Beautiful">
+                <img src="assets/images/img-12.jpg" alt="Memory 12" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-image"></i>
+                    <span>Media loading...<br><small>Place img-12.jpg in assets/images/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #12</div>
+            </div>
+            <!-- IMAGE 13 -->
+            <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-13.jpg" data-caption="Forever Moments">
+                <img src="assets/images/img-13.jpg" alt="Memory 13" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-image"></i>
+                    <span>Media loading...<br><small>Place img-13.jpg in assets/images/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #13</div>
+            </div>
+            <!-- IMAGE 14 -->
+            <div class="gallery-item reveal reveal-delay-1" data-type="image" data-src="assets/images/img-14.jpg" data-caption="Priceless">
+                <img src="assets/images/img-14.jpg" alt="Memory 14" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-image"></i>
+                    <span>Media loading...<br><small>Place img-14.jpg in assets/images/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #14</div>
+            </div>
+            <!-- IMAGE 15 -->
+            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-15.jpg" data-caption="Just Us">
+                <img src="assets/images/img-15.jpg" alt="Memory 15" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-image"></i>
+                    <span>Media loading...<br><small>Place img-15.jpg in assets/images/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #15</div>
+            </div>
+            <!-- IMAGE 16 -->
+            <div class="gallery-item reveal reveal-delay-1" data-type="image" data-src="assets/images/img-16.jpg" data-caption="Magic">
+                <img src="assets/images/img-16.jpg" alt="Memory 16" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-image"></i>
+                    <span>Media loading...<br><small>Place img-16.jpg in assets/images/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #16</div>
+            </div>
+            <!-- IMAGE 17 -->
+            <div class="gallery-item reveal" data-type="image" data-src="assets/images/img-17.jpg" data-caption="Best Day">
+                <img src="assets/images/img-17.jpg" alt="Memory 17" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-image"></i>
+                    <span>Media loading...<br><small>Place img-17.jpg in assets/images/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #17</div>
+            </div>
+            <!-- IMAGE 18 -->
+            <div class="gallery-item reveal reveal-delay-2" data-type="image" data-src="assets/images/img-18.jpg" data-caption="My Favorite">
+                <img src="assets/images/img-18.jpg" alt="Memory 18" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-image"></i>
+                    <span>Media loading...<br><small>Place img-18.jpg in assets/images/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-image"></i> Memory #18</div>
+            </div>
+            <!-- VIDEO 1 -->
+            <div class="gallery-item reveal" data-type="video" data-src="assets/videos/vid-1.mp4" data-caption="Video Moment #1">
+                <video src="assets/videos/vid-1.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-video"></i>
+                    <span>Media loading...<br><small>Place vid-1.mp4 in assets/videos/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #1</div>
+            </div>
             <!-- VIDEO 2 -->
-            <!-- REPLACE WITH: vid-2.mp4 -->
-            <div class="gallery-item reveal reveal-delay-2" data-type="video" data-src="assets/videos/vid-2.mp4" data-caption="Another Special Video">
+            <div class="gallery-item reveal reveal-delay-1" data-type="video" data-src="assets/videos/vid-2.mp4" data-caption="Video Moment #2">
                 <video src="assets/videos/vid-2.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
                 <div class="media-placeholder" style="display:none;">
                     <i class="fas fa-video"></i>
                     <span>Media loading...<br><small>Place vid-2.mp4 in assets/videos/</small></span>
                 </div>
                 <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #2</div>
+            </div>
+            <!-- VIDEO 3 -->
+            <div class="gallery-item reveal reveal-delay-2" data-type="video" data-src="assets/videos/vid-3.mp4" data-caption="Video Moment #3">
+                <video src="assets/videos/vid-3.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-video"></i>
+                    <span>Media loading...<br><small>Place vid-3.mp4 in assets/videos/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #3</div>
+            </div>
+            <!-- VIDEO 4 -->
+            <div class="gallery-item reveal reveal-delay-1" data-type="video" data-src="assets/videos/vid-4.mp4" data-caption="Video Moment #4">
+                <video src="assets/videos/vid-4.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-video"></i>
+                    <span>Media loading...<br><small>Place vid-4.mp4 in assets/videos/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #4</div>
+            </div>
+            <!-- VIDEO 5 -->
+            <div class="gallery-item reveal" data-type="video" data-src="assets/videos/vid-5.mp4" data-caption="Video Moment #5">
+                <video src="assets/videos/vid-5.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-video"></i>
+                    <span>Media loading...<br><small>Place vid-5.mp4 in assets/videos/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #5</div>
+            </div>
+            <!-- VIDEO 6 -->
+            <div class="gallery-item reveal reveal-delay-2" data-type="video" data-src="assets/videos/vid-6.mp4" data-caption="Video Moment #6">
+                <video src="assets/videos/vid-6.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-video"></i>
+                    <span>Media loading...<br><small>Place vid-6.mp4 in assets/videos/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #6</div>
+            </div>
+            <!-- VIDEO 7 -->
+            <div class="gallery-item reveal" data-type="video" data-src="assets/videos/vid-7.mp4" data-caption="Video Moment #7">
+                <video src="assets/videos/vid-7.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-video"></i>
+                    <span>Media loading...<br><small>Place vid-7.mp4 in assets/videos/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #7</div>
+            </div>
+            <!-- VIDEO 8 -->
+            <div class="gallery-item reveal reveal-delay-1" data-type="video" data-src="assets/videos/vid-8.mp4" data-caption="Video Moment #8">
+                <video src="assets/videos/vid-8.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-video"></i>
+                    <span>Media loading...<br><small>Place vid-8.mp4 in assets/videos/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #8</div>
+            </div>
+            <!-- VIDEO 9 -->
+            <div class="gallery-item reveal reveal-delay-2" data-type="video" data-src="assets/videos/vid-9.mp4" data-caption="Video Moment #9">
+                <video src="assets/videos/vid-9.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-video"></i>
+                    <span>Media loading...<br><small>Place vid-9.mp4 in assets/videos/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #9</div>
+            </div>
+            <!-- VIDEO 10 -->
+            <div class="gallery-item reveal reveal-delay-1" data-type="video" data-src="assets/videos/vid-10.mp4" data-caption="Video Moment #10">
+                <video src="assets/videos/vid-10.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-video"></i>
+                    <span>Media loading...<br><small>Place vid-10.mp4 in assets/videos/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #10</div>
+            </div>
+            <!-- VIDEO 11 -->
+            <div class="gallery-item reveal" data-type="video" data-src="assets/videos/vid-11.mp4" data-caption="Video Moment #11">
+                <video src="assets/videos/vid-11.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-video"></i>
+                    <span>Media loading...<br><small>Place vid-11.mp4 in assets/videos/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #11</div>
+            </div>
+            <!-- VIDEO 12 -->
+            <div class="gallery-item reveal reveal-delay-2" data-type="video" data-src="assets/videos/vid-12.mp4" data-caption="Video Moment #12">
+                <video src="assets/videos/vid-12.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-video"></i>
+                    <span>Media loading...<br><small>Place vid-12.mp4 in assets/videos/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #12</div>
+            </div>
+            <!-- VIDEO 13 -->
+            <div class="gallery-item reveal" data-type="video" data-src="assets/videos/vid-13.mp4" data-caption="Video Moment #13">
+                <video src="assets/videos/vid-13.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-video"></i>
+                    <span>Media loading...<br><small>Place vid-13.mp4 in assets/videos/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #13</div>
+            </div>
+            <!-- VIDEO 14 -->
+            <div class="gallery-item reveal reveal-delay-1" data-type="video" data-src="assets/videos/vid-14.mp4" data-caption="Video Moment #14">
+                <video src="assets/videos/vid-14.mp4" muted preload="metadata" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"></video>
+                <div class="media-placeholder" style="display:none;">
+                    <i class="fas fa-video"></i>
+                    <span>Media loading...<br><small>Place vid-14.mp4 in assets/videos/</small></span>
+                </div>
+                <div class="gallery-overlay"><i class="fas fa-play-circle"></i> Video #14</div>
             </div>
         </div>
     </section>
@@ -930,6 +1268,11 @@
         <div class="lightbox-caption" id="lightboxCaption"></div>
     </div>
 
+    <!-- Parallax Divider: Gallery to Poems -->
+    <div class="parallax-section reveal" style="background-image: url('assets/images/img-12.jpg');">
+        <p class="parallax-text">"Kuch feelings shabdon mein band nahi hoti... bas mehsoos hoti hain."</p>
+    </div>
+
     <!-- ============================================
          POEMS SECTION
          Two original poems for Anshika
@@ -939,6 +1282,8 @@
         <p class="section-subtitle reveal">Jo dil mein hai, woh shabdon mein...</p>
 
         <div class="poem-card reveal">
+            <img src="assets/images/img-9.jpg" alt="Pehli Baar" class="poem-img" loading="lazy">
+            <div class="poem-content">
             <h3>Pehli Baar</h3>
             <p>Pehli baar jab tu mili,
 Mujhe laga bas ek aur stranger hai.
@@ -960,9 +1305,12 @@ Aaj jab bhi sochta hoon us din ke baare mein,
 Anshika, tu sirf ek name nahi hai,
 Tu woh feeling hai jo har din nayi lagti hai.</p>
             <div class="for-you">- For You, Always</div>
+            </div>
         </div>
 
         <div class="poem-card reveal reveal-delay-1">
+            <img src="assets/images/img-10.jpg" alt="Aaj Tera Din Hai" class="poem-img" loading="lazy">
+            <div class="poem-content">
             <h3>Aaj Tera Din Hai</h3>
             <p>Aaj tera din hai, meri Anshika,
 Aur main yahan hoon, tere liye kuch banaya.
@@ -984,6 +1332,7 @@ Tu hamesha khush rahe, yahi meri dua hai.
 Yeh website chhoti si hai, par meri feelings nahi,
 Tu meri Anshika hai, aur hamesha rahegi.</p>
             <div class="for-you">- Happy Birthday, Love</div>
+            </div>
         </div>
     </section>
 
@@ -1021,6 +1370,11 @@ Tu meri Anshika hai, aur hamesha rahegi.</p>
             </div>
         </div>
     </section>
+
+    <!-- Parallax Divider: Messages to Birthday -->
+    <div class="parallax-section reveal" style="background-image: url('assets/images/img-13.jpg');">
+        <p class="parallax-text">"Tera har ek pal meri duniya ka sabse haseen hissa hai..."</p>
+    </div>
 
     <!-- ============================================
          BIRTHDAY MESSAGE SECTION
