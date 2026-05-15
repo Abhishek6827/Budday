@@ -672,27 +672,33 @@
         }
 
         .timeline-img {
-            width: 100%;
-            max-height: 260px;
+            max-width: 100%;
             height: auto;
-            object-fit: contain;
+            display: block;
             border-radius: 12px;
-            margin-top: 14px;
-            margin-bottom: 4px;
+            margin: 14px auto 4px;
             box-shadow: 0 4px 12px var(--shadow);
-            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
         }
 
         /* ============================================
            MOMENTS SCROLL SECTION
            Dedicated scroll container with snap & two-col layout
            ============================================ */
+        #moments {
+            max-width: 100%;
+            padding: 0;
+        }
+
+        #moments .section-title,
+        #moments .section-subtitle {
+            padding: 0 20px;
+        }
+
         .moments-scroll {
             height: calc(100vh - 80px);
             overflow-y: scroll;
             scroll-snap-type: y mandatory;
             position: relative;
-            border-radius: var(--border-radius);
             box-shadow: 0 20px 60px var(--shadow);
             background: var(--bg);
         }
@@ -701,10 +707,10 @@
             height: 100%;
             scroll-snap-align: start;
             display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
+            grid-template-columns: 1.2fr 0.8fr;
             align-items: center;
-            gap: 50px;
-            padding: 40px 60px;
+            gap: 30px;
+            padding: 30px 40px;
             position: relative;
             background: linear-gradient(180deg, var(--bg) 0%, #fff0f3 100%);
             opacity: 0.35;
@@ -888,14 +894,14 @@
         }
 
         .poem-card .poem-img {
-            width: 220px;
+            max-width: 220px;
             max-height: 320px;
             height: auto;
-            object-fit: contain;
+            width: auto;
             border-radius: 12px;
             flex-shrink: 0;
             box-shadow: 0 4px 16px var(--shadow);
-            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            display: block;
         }
 
         .poem-card .poem-content {
@@ -1075,7 +1081,8 @@
             }
 
             .timeline-img {
-                max-height: 200px;
+                max-width: 100%;
+                height: auto;
             }
 
             .poem-card {
@@ -1085,7 +1092,7 @@
             }
 
             .poem-card .poem-img {
-                width: 100%;
+                max-width: 100%;
                 max-height: 260px;
                 height: auto;
                 margin-bottom: 16px;
@@ -1098,8 +1105,8 @@
 
             .moment-slide {
                 grid-template-columns: 1fr;
-                padding: 24px 20px;
-                gap: 24px;
+                padding: 20px 16px;
+                gap: 16px;
                 align-content: center;
             }
 
