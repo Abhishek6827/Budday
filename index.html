@@ -38,20 +38,29 @@
         .carousel-dot.active { background: var(--pink); transform: scale(1.3); }
         .scroll-indicator { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.6); font-size: 1.5rem; animation: bounce 2s infinite; cursor: pointer; z-index: 10; }
 
-        .timeline { position: relative; padding-left: 30px; max-width: 720px; margin: 0 auto; }
-        .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--pink), var(--purple), transparent); }
-        .timeline-item { position: relative; padding: 28px 0 28px 36px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-        .timeline-dot { position: absolute; left: -6px; top: 32px; width: 14px; height: 14px; background: var(--pink); border-radius: 50%; box-shadow: 0 0 20px var(--pink-glow); }
-        .timeline-date { font-family: var(--font-script); color: var(--gold-soft); font-size: 1.1rem; margin-bottom: 10px; display: block; }
-        .timeline-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; margin-top: 10px; }
-        .timeline-card h3 { font-family: var(--font-script); color: var(--pink-light); font-size: 1.4rem; margin-bottom: 12px; }
-        .timeline-card p { color: var(--text-muted); font-size: 1rem; line-height: 1.7; margin-bottom: 16px; }
-        .timeline-img { width: 100%; max-width: 400px; height: auto; border-radius: 8px; object-fit: cover; display: block; margin: 0 auto; }
+        #story { padding: 80px 20px; max-width: 900px; margin: 0 auto; }
+        .timeline { position: relative; display: flex; flex-direction: column; gap: 60px; }
+        .timeline-item { position: relative; display: flex; align-items: center; gap: 50px; }
+        .timeline-item:nth-child(odd) { flex-direction: row; }
+        .timeline-item:nth-child(even) { flex-direction: row-reverse; }
+        .timeline-img-wrapper { flex: 0 0 45%; display: flex; justify-content: center; }
+        .timeline-img { width: 100%; max-width: 400px; height: 280px; object-fit: cover; border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
+        .timeline-content { flex: 0 0 50%; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; padding: 35px; backdrop-filter: blur(10px); }
+        .timeline-item:nth-child(odd) .timeline-content { text-align: left; }
+        .timeline-item:nth-child(even) .timeline-content { text-align: right; }
+        .timeline-date { font-family: var(--font-script); color: var(--gold-soft); font-size: 1.2rem; margin-bottom: 12px; display: block; font-style: italic; }
+        .timeline-content h3 { font-family: var(--font-vibes); color: var(--gold); font-size: 1.8rem; margin-bottom: 16px; }
+        .timeline-content p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.9; }
 
-        .moments-scroll { display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 20px 0 40px; scrollbar-width: none; }
-        .moments-scroll::-webkit-scrollbar { display: none; }
-        .moment-slide { flex: 0 0 auto; width: min(70vw, 320px); scroll-snap-align: center; border-radius: 16px; overflow: hidden; }
+        .moments-scroll { display: flex; gap: 24px; padding: 20px 0 40px; overflow: hidden; }
+        .moments-track { display: flex; gap: 24px; animation: scrollMarquee 40s linear infinite; }
+        .moments-track:hover { animation-play-state: paused; }
+        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .moment-slide { flex: 0 0 auto; width: 320px; border-radius: 16px; overflow: hidden; background: var(--glass-bg); border: 1px solid var(--glass-border); }
         .moment-slide img { width: 100%; height: 340px; object-fit: cover; display: block; }
+        .moment-number { padding: 12px 16px 0; font-family: var(--font-sans); font-size: 0.9rem; color: var(--pink); font-weight: 600; }
+        .moment-text { padding: 8px 16px 16px; }
+        .moment-text p { font-family: var(--font-script); color: var(--text-muted); font-size: 1rem; line-height: 1.5; }
 
         .poem-card { max-width: 700px; margin: 0 auto 50px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--border-radius, 16px); overflow: hidden; }
         .poem-card img { width: 100%; height: 220px; object-fit: cover; display: block; filter: brightness(0.85); }
@@ -70,6 +79,7 @@
         .birthday-message .signature { font-family: var(--font-vibes); font-size: 2rem; color: var(--pink-light); margin-top: 36px; }
 
         .section-subtitle { text-align: center; font-family: var(--font-script); color: var(--text-muted); font-size: 1.2rem; margin-bottom: 60px; margin-top: -30px; }
+        .section-subtitle.our-story { font-size: 1.5rem; margin-bottom: 40px; }
         .parallax-section { background-attachment: scroll !important; }
 
         @media (max-width: 768px) {
@@ -205,61 +215,73 @@
         <div class="timeline">
             <div class="timeline-item reveal">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">9 March</div>
-                <div class="timeline-card">
+                <div class="timeline-img-wrapper">
+                    <img src="assets/images/img-1.jpg" alt="First Encounter" class="timeline-img" loading="lazy">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">9 March</span>
                     <h3>The First Encounter</h3>
                     <p>One game, two strangers. I still remember the first time we met — something felt different. There was distance, hesitation, but also an unknown connection that I only truly understood later.</p>
-                    <img src="assets/images/img-1.jpg" alt="First Encounter" class="timeline-img" loading="lazy">
                 </div>
             </div>
 
             <div class="timeline-item reveal reveal-delay-1">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">Early March</div>
-                <div class="timeline-card">
+                <div class="timeline-img-wrapper">
+                    <img src="assets/images/img-4.jpg" alt="Same Dreams" class="timeline-img" loading="lazy">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">Early March</span>
                     <h3>Same World, Same Dreams</h3>
                     <p>Somehow we discovered we shared the same career field. Conversations grew deeper. Topics changed — from games to real life, we started talking about dreams, struggles, and everything in between.</p>
-                    <img src="assets/images/img-4.jpg" alt="Same Dreams" class="timeline-img" loading="lazy">
                 </div>
             </div>
 
             <div class="timeline-item reveal reveal-delay-2">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">BGMI Days</div>
-                <div class="timeline-card">
+                <div class="timeline-img-wrapper">
+                    <img src="assets/images/img-5.jpg" alt="BGMI Days" class="timeline-img" loading="lazy">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">BGMI Days</span>
                     <h3>Chickens & Jealousy</h3>
                     <p>Playing BGMI together, earning chicken dinners, and even navigating small jealousies helped build our trust. Friends noticed, but we only had eyes for each other.</p>
-                    <img src="assets/images/img-5.jpg" alt="BGMI Days" class="timeline-img" loading="lazy">
                 </div>
             </div>
 
             <div class="timeline-item reveal">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">12 March</div>
-                <div class="timeline-card">
+                <div class="timeline-img-wrapper">
+                    <img src="assets/images/img-6.jpg" alt="Friend Request" class="timeline-img" loading="lazy">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">12 March</span>
                     <h3>The Friend Request</h3>
                     <p>On March 12, you sent a friend request. From that day, every single day was consistent — messages, calls, shared moments. The connection wasn't just about the game anymore; it was reaching our hearts.</p>
-                    <img src="assets/images/img-6.jpg" alt="Friend Request" class="timeline-img" loading="lazy">
                 </div>
             </div>
 
             <div class="timeline-item reveal reveal-delay-1">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">The Quiet Phase</div>
-                <div class="timeline-card">
+                <div class="timeline-img-wrapper">
+                    <img src="assets/images/img-7.jpg" alt="Quiet Phase" class="timeline-img" loading="lazy">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">The Quiet Phase</span>
                     <h3>When She Went Silent</h3>
                     <p>A phase came when you went quiet and seemed dull. I just listened, understood, and gently guided you. We talked about self-respect and emotional clarity. And then, you made your own beautiful decision.</p>
-                    <img src="assets/images/img-7.jpg" alt="Quiet Phase" class="timeline-img" loading="lazy">
                 </div>
             </div>
 
             <div class="timeline-item reveal reveal-delay-2">
                 <div class="timeline-dot"></div>
-                <div class="timeline-date">Today</div>
-                <div class="timeline-card">
+                <div class="timeline-img-wrapper">
+                    <img src="assets/images/img-8.jpg" alt="Us Naturally" class="timeline-img" loading="lazy">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">Today</span>
                     <h3>Us — Naturally</h3>
                     <p>No formal proposal, no pressure. Just organically, naturally, you chose me on your own. And here we are today — teasing, overthinking, playing, and loving. Happy Birthday, my Anshika.</p>
-                    <img src="assets/images/img-8.jpg" alt="Us Naturally" class="timeline-img" loading="lazy">
                 </div>
             </div>
         </div>
@@ -279,39 +301,37 @@
         <p class="section-subtitle reveal">Some moments are just for us...</p>
 
         <div class="moments-scroll">
-            <!-- MOMENT 01 -->
-            <div class="moment-slide reveal">
-                <div class="moment-number">01 / 27</div>
-                <div class="moment-media" data-type="image" data-src="assets/images/img-1.jpg" data-caption="The First Time">
-                    <img src="assets/images/img-1.jpg" alt="Memory 1" loading="lazy">
+            <div class="moments-track">
+                <!-- MOMENT 01 -->
+                <div class="moment-slide reveal">
+                    <div class="moment-number">01 / 27</div>
+                    <div class="moment-media" data-type="image" data-src="assets/images/img-1.jpg" data-caption="The First Time">
+                        <img src="assets/images/img-1.jpg" alt="Memory 1" loading="lazy">
+                    </div>
+                    <div class="moment-text">
+                        <p>The first time our paths crossed through a game, I had no idea you would become my entire world.</p>
+                    </div>
                 </div>
-                <div class="moment-text">
-                    <p>The first time our paths crossed through a game, I had no idea you would become my entire world.</p>
+                <!-- MOMENT 02 -->
+                <div class="moment-slide reveal">
+                    <div class="moment-number">02 / 27</div>
+                    <div class="moment-media" data-type="image" data-src="assets/images/img-2.jpg" data-caption="Every Photo">
+                        <img src="assets/images/img-2.jpg" alt="Memory 2" loading="lazy">
+                    </div>
+                    <div class="moment-text">
+                        <p>Every photo of you captures a feeling I never knew words could describe.</p>
+                    </div>
                 </div>
-                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
-            </div>
-            <!-- MOMENT 02 -->
-            <div class="moment-slide reveal">
-                <div class="moment-number">02 / 27</div>
-                <div class="moment-media" data-type="image" data-src="assets/images/img-2.jpg" data-caption="Every Photo">
-                    <img src="assets/images/img-2.jpg" alt="Memory 2" loading="lazy">
+                <!-- MOMENT 03 -->
+                <div class="moment-slide reveal">
+                    <div class="moment-number">03 / 27</div>
+                    <div class="moment-media" data-type="image" data-src="assets/images/img-4.jpg" data-caption="Strangers to Soulmates">
+                        <img src="assets/images/img-4.jpg" alt="Memory 3" loading="lazy">
+                    </div>
+                    <div class="moment-text">
+                        <p>From two strangers in a virtual world to the closest souls in reality — destiny works in beautiful ways.</p>
+                    </div>
                 </div>
-                <div class="moment-text">
-                    <p>Every photo of you captures a feeling I never knew words could describe.</p>
-                </div>
-                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
-            </div>
-            <!-- MOMENT 03 -->
-            <div class="moment-slide reveal">
-                <div class="moment-number">03 / 27</div>
-                <div class="moment-media" data-type="image" data-src="assets/images/img-4.jpg" data-caption="Strangers to Soulmates">
-                    <img src="assets/images/img-4.jpg" alt="Memory 3" loading="lazy">
-                </div>
-                <div class="moment-text">
-                    <p>From two strangers in a virtual world to the closest souls in reality — destiny works in beautiful ways.</p>
-                </div>
-                <div class="moment-hint"><i class="fas fa-chevron-down"></i></div>
-            </div>
             <!-- MOMENT 04 -->
             <div class="moment-slide reveal">
                 <div class="moment-number">04 / 27</div>
@@ -592,14 +612,33 @@
         <p class="parallax-text">"Some feelings can't be trapped in words... they are simply felt."</p>
     </div>
 
+    <!-- Duplicate moments for infinite scroll -->
+    <div class="moments-track" aria-hidden="true">
+        <!-- MOMENT 01 -->
+        <div class="moment-slide">
+            <div class="moment-number">01 / 27</div>
+            <div class="moment-media"><img src="assets/images/img-1.jpg" alt="Memory 1" loading="lazy"></div>
+            </div>
+            <!-- MOMENT 02 -->
+            <div class="moment-slide">
+                <div class="moment-number">02 / 27</div>
+                <div class="moment-media"><img src="assets/images/img-2.jpg" alt="Memory 2" loading="lazy"></div>
+                <div class="moment-text"><p>Every photo of you captures a feeling I never knew words could describe.</p></div>
+            </div>
+            <!-- MOMENT 03 -->
+            <div class="moment-slide">
+                <div class="moment-number">03 / 27</div>
+                <div class="moment-media"><img src="assets/images/img-4.jpg" alt="Memory 3" loading="lazy"></div>
+                <div class="moment-text"><p>From two strangers in a virtual world to the closest souls in reality — destiny works in beautiful ways.</p></div>
+            </div>
+        </div>
+    </section>
+
     <!-- ============================================
-         POEMS SECTION
-         Two original poems for Anshika
+         POEMS FOR HER
+         Romantic verses with images
          ============================================ -->
     <section id="poems">
-        <h2 class="section-title reveal gradient-text">Words For You</h2>
-        <p class="section-subtitle reveal">What's in the heart, put into words...</p>
-
         <div class="poem-card reveal">
             <img src="assets/images/img-9.jpg" alt="Pehli Baar" class="poem-img" loading="lazy">
             <div class="poem-content">
