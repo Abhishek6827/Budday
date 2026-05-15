@@ -1244,9 +1244,12 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
             if (!video) return;
             card.addEventListener('mouseenter', () => {
                 video.muted = false;
+                video.volume = 1;
+                video.play().catch(() => {});
             });
             card.addEventListener('mouseleave', () => {
                 video.muted = true;
+                // Optional: keep it playing silently or pause it. We will keep it playing since it's a carousel.
             });
         });
 
