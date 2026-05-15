@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tripti UI Styles -->
+    <link rel="stylesheet" href="styles.css">
 
     <style>
         /* ============================================
@@ -1775,6 +1777,239 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
     </section>
 
     <!-- ============================================
+         TRIPTI UI COMPONENTS (Empty Templates)
+         ============================================ -->
+
+    <!-- Intro with Envelope -->
+    <section id="intro">
+        <div class="hearts-bg"></div>
+        <p class="intro-text animate-on-scroll">Welcome message goes here...</p>
+        <button class="enter-btn">Enter</button>
+    </section>
+
+    <section id="envelope-section">
+        <div class="envelope-container animate-on-scroll">
+            <div class="envelope">
+                <div class="envelope-flap"></div>
+                <div class="envelope-heart">💖</div>
+            </div>
+        </div>
+        <div class="letter-content">
+            <div class="letter-text">Your letter text goes here...</div>
+            <div class="letter-photos">
+                <div class="polaroid"><img src="" alt=""></div>
+                <div class="polaroid"><img src="" alt=""></div>
+                <div class="polaroid"><img src="" alt=""></div>
+            </div>
+        </div>
+        <p class="tap-hint">Tap the envelope to open</p>
+    </section>
+
+    <!-- Collection Hub -->
+    <section id="collection-hub">
+        <h2 class="section-title animate-on-scroll">Collection Hub</h2>
+        <p class="hub-subtitle">Tap a card to explore memories</p>
+        <div class="hub-grid">
+            <div class="collection-card" data-modal="modal-carousel">
+                <div class="card-glow"></div>
+                <span class="card-icon">🎬</span>
+                <div class="card-title">Moments</div>
+                <div class="card-tagline">Short clips, big feelings</div>
+                <span class="card-cta">Open</span>
+            </div>
+            <div class="collection-card" data-modal="modal-mystery">
+                <div class="card-glow"></div>
+                <span class="card-icon">🎁</span>
+                <div class="card-title">Surprises</div>
+                <div class="card-tagline">Tap to reveal hidden memories</div>
+                <span class="card-cta">Open</span>
+            </div>
+            <div class="collection-card" data-modal="modal-scratch">
+                <div class="card-glow"></div>
+                <span class="card-icon">✨</span>
+                <div class="card-title">Scratch</div>
+                <div class="card-tagline">Scratch to reveal hidden photos</div>
+                <span class="card-cta">Open</span>
+            </div>
+            <div class="collection-card" data-modal="modal-diary">
+                <div class="card-glow"></div>
+                <span class="card-icon">📝</span>
+                <div class="card-title">Diary</div>
+                <div class="card-tagline">Longer moments with words</div>
+                <span class="card-cta">Open</span>
+            </div>
+            <div class="collection-card" data-modal="modal-slider">
+                <div class="card-glow"></div>
+                <span class="card-icon">📸</span>
+                <div class="card-title">Gallery</div>
+                <div class="card-tagline">A scroll through our best shots</div>
+                <span class="card-cta">Open</span>
+            </div>
+            <div class="collection-card" data-modal="modal-mosaic">
+                <div class="card-glow"></div>
+                <span class="card-icon">🎞️</span>
+                <div class="card-title">Cinema</div>
+                <div class="card-tagline">Cinematic video showcase</div>
+                <span class="card-cta">Open</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection Modals -->
+    <div class="collection-modal" id="modal-carousel">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close-btn">&times;</button>
+            <section id="video-carousel">
+                <h2 class="section-title">Video Moments</h2>
+                <div class="carousel-wrapper">
+                    <div class="carousel-card"><video src="" muted loop playsinline></video><div class="quote-overlay"></div></div>
+                    <div class="carousel-card"><video src="" muted loop playsinline></video><div class="quote-overlay"></div></div>
+                    <div class="carousel-card"><video src="" muted loop playsinline></video><div class="quote-overlay"></div></div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="collection-modal" id="modal-mystery">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close-btn">&times;</button>
+            <section id="mystery-cards">
+                <h2 class="section-title">Mystery Cards</h2>
+                <div class="cards-grid">
+                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><span class="mystery-icon">🎁</span><span class="tap-text">Tap to reveal</span></div><div class="flip-card-back"><img src="" alt=""><div class="card-thought"></div></div></div></div>
+                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><span class="mystery-icon">🎁</span><span class="tap-text">Tap to reveal</span></div><div class="flip-card-back"><img src="" alt=""><div class="card-thought"></div></div></div></div>
+                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><span class="mystery-icon">🎁</span><span class="tap-text">Tap to reveal</span></div><div class="flip-card-back"><img src="" alt=""><div class="card-thought"></div></div></div></div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="collection-modal" id="modal-scratch">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close-btn">&times;</button>
+            <section id="scratch-section">
+                <h2 class="section-title">Scratch Cards</h2>
+                <div class="scratch-grid">
+                    <div class="scratch-card"><img src="" alt=""><canvas></canvas></div>
+                    <div class="scratch-card"><img src="" alt=""><canvas></canvas></div>
+                    <div class="scratch-card"><img src="" alt=""><canvas></canvas></div>
+                </div>
+                <p class="scratch-hint">Scratch to reveal the hidden photo!</p>
+            </section>
+        </div>
+    </div>
+    <div class="collection-modal" id="modal-diary">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close-btn">&times;</button>
+            <section id="video-diary">
+                <h2 class="section-title">Video Diary</h2>
+                <div class="video-strip"><video src="" muted loop playsinline></video><div class="strip-text"><blockquote></blockquote></div></div>
+                <div class="video-strip"><video src="" muted loop playsinline></video><div class="strip-text"><blockquote></blockquote></div></div>
+            </section>
+        </div>
+    </div>
+    <div class="collection-modal" id="modal-slider">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close-btn">&times;</button>
+            <section id="photo-slider">
+                <div class="slider-container">
+                    <div class="slide active">
+                        <div class="slide-blur-bg"><img src="" alt=""></div>
+                        <img class="slide-main-img" src="" alt="">
+                        <div class="slide-quote"><p></p></div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-blur-bg"><img src="" alt=""></div>
+                        <img class="slide-main-img" src="" alt="">
+                        <div class="slide-quote"><p></p></div>
+                    </div>
+                    <div class="slider-dots"><div class="dot active"></div><div class="dot"></div></div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="collection-modal" id="modal-mosaic">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close-btn">&times;</button>
+            <section id="video-mosaic">
+                <h2 class="section-title">Cinema Mosaic</h2>
+                <div class="video-mosaic-showcase">
+                    <div class="video-cinema">
+                        <video src="" muted loop playsinline></video>
+                        <button class="play-btn-big">▶</button>
+                        <div class="cinema-overlay"><p></p></div>
+                    </div>
+                    <div class="video-pair">
+                        <div class="video-pair-card"><video src="" muted loop playsinline></video><div class="pair-label"></div></div>
+                        <div class="video-pair-card"><video src="" muted loop playsinline></video><div class="pair-label"></div></div>
+                    </div>
+                    <div class="video-reveal">
+                        <video src="" muted loop playsinline></video>
+                        <div class="reveal-prompt"><span class="reveal-icon">🔮</span><span class="reveal-text">Click to reveal</span></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Gallery Showcase -->
+    <section id="gallery">
+        <h2 class="section-title animate-on-scroll">Gallery</h2>
+        <div class="gallery-showcase">
+            <div class="gallery-hero animate-on-scroll">
+                <div class="blur-bg"><img src="" alt=""></div>
+                <img class="main-img" src="" alt="">
+                <div class="hero-text"></div>
+            </div>
+            <div class="gallery-duo animate-on-scroll">
+                <div class="duo-image"><div class="blur-bg"><img src="" alt=""></div><img class="main-img" src="" alt=""></div>
+                <div class="duo-text"><blockquote></blockquote></div>
+            </div>
+            <div class="gallery-triple">
+                <div class="gallery-card animate-on-scroll"><div class="blur-bg"><img src="" alt=""></div><img class="main-img" src="" alt=""><div class="card-label"></div></div>
+                <div class="gallery-card animate-on-scroll"><div class="blur-bg"><img src="" alt=""></div><img class="main-img" src="" alt=""><div class="card-label"></div></div>
+                <div class="gallery-card animate-on-scroll"><div class="blur-bg"><img src="" alt=""></div><img class="main-img" src="" alt=""><div class="card-label"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Polaroids -->
+    <section id="floating-polaroids">
+        <h2 class="section-title animate-on-scroll">Floating Memories</h2>
+        <div class="polaroids-container">
+            <div class="floating-polaroid" style="--rotate:-8deg;--duration:7s;--delay:0s;top:5%;left:10%;"><img src="" alt=""><div class="caption"></div></div>
+            <div class="floating-polaroid" style="--rotate:5deg;--duration:8s;--delay:1s;top:15%;left:60%;"><img src="" alt=""><div class="caption"></div></div>
+            <div class="floating-polaroid" style="--rotate:-3deg;--duration:6s;--delay:2s;top:45%;left:25%;"><img src="" alt=""><div class="caption"></div></div>
+            <div class="floating-polaroid" style="--rotate:7deg;--duration:9s;--delay:0.5s;top:60%;left:70%;"><img src="" alt=""><div class="caption"></div></div>
+            <div class="floating-polaroid" style="--rotate:-6deg;--duration:7.5s;--delay:1.5s;top:75%;left:40%;"><img src="" alt=""><div class="caption"></div></div>
+        </div>
+    </section>
+
+    <!-- Poems -->
+    <section id="tripti-poems">
+        <h2 class="section-title animate-on-scroll">Poems</h2>
+        <div class="poem-block animate-on-scroll">
+            <div class="poem-image-wrap"><div class="blur-bg"><img src="" alt=""></div><img class="main-img" src="" alt=""></div>
+            <div class="poem-text-container">
+                <h3>Poem Title</h3>
+                <p class="typewriter-text" data-text="Your poem text goes here..."></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Message -->
+    <section id="final-message">
+        <div class="final-stars"></div>
+        <div class="final-heart">💖</div>
+        <div class="final-text animate-on-scroll">Final Message</div>
+        <div class="final-subtext animate-on-scroll">Your closing words go here...</div>
+    </section>
+
+    <!-- ============================================
          FOOTER
          ============================================ -->
     <footer>
@@ -2162,5 +2397,6 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
             momentSlides.forEach(slide => momentObserver.observe(slide));
         }
     </script>
+    <script src="script.js"></script>
 </body>
 </html>
