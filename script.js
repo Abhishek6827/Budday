@@ -1,14 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   // ─── SCROLL PROGRESS BAR ───
   const scrollProgress = document.querySelector('.scroll-progress');
-  if (scrollProgress) {
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = (scrollTop / docHeight) * 100;
-      scrollProgress.style.width = scrollPercent + '%';
-    });
-  }
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    scrollProgress.style.width = scrollPercent + '%';
+  });
 
   // ─── FLOATING HEARTS IN INTRO ───
   const heartsBg = document.querySelector('.hearts-bg');
@@ -26,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ─── BLUR BACKGROUNDS FOR VIDEOS ───
+  // Clone each video as a blurred cover-fit BG behind the main contain-fit video
   const blurVideoObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const blurVid = entry.target;
@@ -49,8 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
     blurVideoObserver.observe(blur);
   }
 
+  // Containers that already have position:relative + overflow:hidden
   document.querySelectorAll('.carousel-card, .video-cinema, .video-pair-card, .video-reveal').forEach(addBlurVideoBG);
 
+  // Video strips: wrap video in a positioned container first
   document.querySelectorAll('.video-strip').forEach(strip => {
     const mainVideo = strip.querySelector('video');
     if (!mainVideo) return;
@@ -69,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapper.className = 'flip-img-wrap';
     back.insertBefore(wrapper, img);
     wrapper.appendChild(img);
+    // Add blur bg
     const blurDiv = document.createElement('div');
     blurDiv.className = 'blur-bg';
     const blurImg = document.createElement('img');
@@ -80,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ─── MUSIC PLAYER ───
-  const audio = document.getElementById('bg-music') || document.getElementById('bgAudio');
+  const audio = document.getElementById('bg-music');
   const musicPlayer = document.querySelector('.music-player');
   const musicIcon = musicPlayer?.querySelector('.music-icon');
   let musicStarted = false;
@@ -94,17 +96,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Only attach secondary handler if Budday's #musicPlayer inline handler isn't present
-  if (musicPlayer && !document.getElementById('musicPlayer')) {
+  if (musicPlayer) {
     musicPlayer.addEventListener('click', () => {
       if (audio.paused) {
         audio.play();
         musicPlayer.classList.remove('paused');
-        if (musicIcon) musicIcon.textContent = '🎵';
+        musicIcon.textContent = '🎵';
       } else {
         audio.pause();
         musicPlayer.classList.add('paused');
-        if (musicIcon) musicIcon.textContent = '🔇';
+        musicIcon.textContent = '🔇';
       }
     });
   }
@@ -199,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.fillText('✨ Scratch Me ✨', canvas.width / 2, canvas.height / 2 - 10);
     ctx.font = '16px "Poppins", sans-serif';
     ctx.fillStyle = '#b8a9c9';
-    ctx.fillText("What's hidden here?", canvas.width / 2, canvas.height / 2 + 20);
+    ctx.fillText('What\'s hidden here?', canvas.width / 2, canvas.height / 2 + 20);
 
     let isDrawing = false;
 
@@ -337,15 +338,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ─── LIGHTBOX ───
   const lightbox = document.getElementById('lightbox');
-  const lightboxContent = document.getElementById('lightboxContent');
-  const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxContent = document.getElementById('lightbox-content');
+  const lightboxClose = document.querySelector('.lightbox .close-btn');
 
   document.querySelectorAll('.gallery-card, .gallery-hero').forEach(item => {
     item.addEventListener('click', () => {
       const img = item.querySelector('.main-img');
       if (lightbox && lightboxContent && img) {
         lightboxContent.innerHTML = `<img src="${img.src}" alt="Photo">`;
-        lightbox.classList.add('active');
+        lightbox.classList.add('show');
       }
     });
   });
@@ -353,13 +354,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (lightbox) {
     lightbox.addEventListener('click', (e) => {
       if (e.target === lightbox || e.target === lightboxClose) {
-        lightbox.classList.remove('active');
+        lightbox.classList.remove('show');
       }
     });
   }
 
   if (lightboxClose) {
-    lightboxClose.addEventListener('click', () => lightbox.classList.remove('active'));
+    lightboxClose.addEventListener('click', () => lightbox.classList.remove('show'));
   }
 
   // ─── CAROUSEL DRAG SCROLL ───
@@ -417,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fillText('✨ Scratch Me ✨', canvas.width / 2, canvas.height / 2 - 10);
       ctx.font = '16px "Poppins", sans-serif';
       ctx.fillStyle = '#b8a9c9';
-      ctx.fillText("What's hidden here?", canvas.width / 2, canvas.height / 2 + 20);
+      ctx.fillText('What\'s hidden here?', canvas.width / 2, canvas.height / 2 + 20);
     });
   });
 
@@ -440,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fillText('✨ Scratch Me ✨', canvas.width / 2, canvas.height / 2 - 10);
       ctx.font = '16px "Poppins", sans-serif';
       ctx.fillStyle = '#b8a9c9';
-      ctx.fillText("What's hidden here?", canvas.width / 2, canvas.height / 2 + 20);
+      ctx.fillText('What\'s hidden here?', canvas.width / 2, canvas.height / 2 + 20);
 
       let isDrawing = false;
       function getPos(e) {
@@ -474,15 +475,18 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.classList.add('active');
     document.body.classList.add('modal-open');
 
+    // Small delay for CSS transition
     requestAnimationFrame(() => {
       modal.querySelector('.modal-backdrop').style.opacity = '1';
       modal.querySelector('.modal-content').style.transform = 'translateY(0)';
     });
 
+    // Re-init scratch canvases when scratch modal opens
     if (modalId === 'modal-scratch') {
       setTimeout(() => initScratchCanvases(modal), 300);
     }
 
+    // Add blur-video-bg to videos in the modal
     modal.querySelectorAll('.carousel-card, .video-cinema, .video-pair-card, .video-reveal').forEach(container => {
       if (!container.querySelector('.blur-video-bg')) {
         addBlurVideoBG(container);
@@ -497,6 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
     content.style.transform = 'translateY(100%)';
     backdrop.style.opacity = '0';
     
+    // Pause all videos in modal
     modal.querySelectorAll('video').forEach(v => { v.pause(); v.currentTime = 0; });
     
     setTimeout(() => {
@@ -505,6 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 500);
   }
 
+  // Collection card click → open modal
   document.querySelectorAll('.collection-card').forEach(card => {
     card.addEventListener('click', () => {
       const modalId = card.dataset.modal;
@@ -512,6 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Close button click
   document.querySelectorAll('.modal-close-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -520,6 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Backdrop click → close
   document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
     backdrop.addEventListener('click', () => {
       const modal = backdrop.closest('.collection-modal');
@@ -527,6 +535,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Escape key → close
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       const activeModal = document.querySelector('.collection-modal.active');
@@ -534,6 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Set up click handlers for videos inside modals
   document.querySelectorAll('.collection-modal .video-strip video:not(.blur-video-bg)').forEach(video => {
     video.addEventListener('click', () => {
       if (video.paused) { video.play(); video.muted = false; }
@@ -548,6 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Video cinema play buttons in modals
   document.querySelectorAll('.collection-modal .video-cinema').forEach(cinema => {
     cinema.addEventListener('click', () => {
       const video = cinema.querySelector('video:not(.blur-video-bg)');
@@ -564,6 +575,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Video pair click in modals
   document.querySelectorAll('.collection-modal .video-pair-card').forEach(card => {
     card.addEventListener('click', () => {
       const video = card.querySelector('video:not(.blur-video-bg)');
@@ -572,6 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Video reveal click in modals
   document.querySelectorAll('.collection-modal .video-reveal').forEach(reveal => {
     reveal.addEventListener('click', () => {
       const video = reveal.querySelector('video:not(.blur-video-bg)');
@@ -587,6 +600,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Flip cards inside modals
   document.querySelectorAll('.collection-modal .flip-card').forEach(card => {
     card.addEventListener('click', () => {
       card.classList.toggle('flipped');
