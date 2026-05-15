@@ -1067,6 +1067,13 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
         </p>
     </section>
 
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox"><i class="fas fa-times"></i></button>
+        <div id="lightboxContent"></div>
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+
     <!-- ============================================
          FOOTER
          ============================================ -->
@@ -1153,6 +1160,7 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
 
         document.querySelectorAll('.moment-media').forEach(item => {
             item.addEventListener('click', () => {
+                if (!lightbox || !lightboxContent) return;
                 const type = item.getAttribute('data-type');
                 const src = item.getAttribute('data-src');
                 const caption = item.getAttribute('data-caption');
@@ -1172,20 +1180,21 @@ Happy Birthday, my Anshika. This day is yours, and I am always with you — in g
                     lightboxContent.appendChild(video);
                 }
 
-                lightboxCaption.textContent = caption;
+                if (lightboxCaption) lightboxCaption.textContent = caption;
                 lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Prevent background scroll
+                document.body.style.overflow = 'hidden';
             });
         });
 
         function closeLightbox() {
+            if (!lightbox) return;
             lightbox.classList.remove('active');
-            lightboxContent.innerHTML = '';
+            if (lightboxContent) lightboxContent.innerHTML = '';
             document.body.style.overflow = '';
         }
 
-        lightboxClose.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
+        if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+        if (lightbox) lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) closeLightbox();
         });
         document.addEventListener('keydown', (e) => {

@@ -600,10 +600,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Flip cards inside modals
-  document.querySelectorAll('.collection-modal .flip-card').forEach(card => {
-    card.addEventListener('click', () => {
-      card.classList.toggle('flipped');
-    });
-  });
+
 });
