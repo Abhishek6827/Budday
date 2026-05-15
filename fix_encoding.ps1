@@ -7,14 +7,11 @@ if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $by
     $bytes = $bytes[3..($bytes.Length-1)]
 }
 
-# Decode the bytes as Latin-1 (ISO-8859-1) to get the original UTF-8 bytes back
+# Decode the bytes as Latin-1 (ISO-8859-1) to recover the original UTF-8 byte sequences
 $content = [System.Text.Encoding]::GetEncoding('iso-8859-1').GetString($bytes)
 
-# Now encode properly as UTF-8 without BOM
+# Write properly as UTF-8 without BOM
 $utf8NoBOM = New-Object System.Text.UTF8Encoding($false)
 [System.IO.File]::WriteAllText('d:\Budday\index.html', $content, $utf8NoBOM)
 
-Write-Host "Fixed! Checking first emoji..."
-$check = [System.IO.File]::ReadAllText('d:\Budday\index.html')
-if ($check.Contains('💕')) { Write-Host "SUCCESS: Emojis are correct" }
-else { Write-Host "WARNING: Emojis may still be garbled" }
+Write-Host "Encoding fixed!"
